@@ -1,4 +1,4 @@
-const getRandomInt = function (min, max) {
+const getRandomInt = (min, max) =>{
   if (max > min && min >= 0) {
 
     min = Math.floor(min);
@@ -22,7 +22,7 @@ const getRandomInt = function (min, max) {
   }
 }
 
-const getRandomFloat = function (min, max, numberOfDigits){
+const getRandomFloat = (min, max, numberOfDigits)=>{
   if (max > min && min >= 0) {
 
     let numberOfSigns = 1;
