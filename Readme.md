@@ -1,7 +1,7 @@
 # Личный проект «Кексобукинг»
 
 * Студент: [Antonina Berchuk](https://up.htmlacademy.ru/javascript/22/user/804273).
-* Наставник: `Владимир Артюхов`.
+* Наставник: [Владимир Артюхов](https://up.htmlacademy.ru/javascript/22/user/1095935).
 
 ---
 
