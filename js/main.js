@@ -8,33 +8,37 @@ const getRandomNumber = (min, max, numberOfDigits = 0) => {
 
   throw new Error('Число меньше нуля');
 }
+
 //Создание массива случайной длины с перемешанными елементами
 const randomArrayItems = (array) => {
   array.sort(() => Math.random() - 0.5);
   let count = getRandomNumber(1, array.length - 1);
   return array.slice(0, count);
 }
+
 //количество необходимых обьектов
 let countOfOffer = 10;
 
 //Массивы данных с сайта
 let type = ['palace', 'flat', 'house', 'bungalow'];
 let features = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
-let photos = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.github.io/assets/images/tokyo/hotel2.jpg', 'http://o0.github.io/assets/images/tokyo/hotel3.jpg']
+let photos = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.github.io/assets/images/tokyo/hotel2.jpg', 'http://o0.github.io/assets/images/tokyo/hotel3.jpg'];
 
 //Функция создания обьекта
 const createOffer = () => {
+  let locationX = getRandomNumber(35.65, 35.7, 5);
+  let locationY = getRandomNumber(139.7, 139.8, 5);
   return {
     author: {
-      avatar: 'img / avatars / user0' + getRandomNumber(1, 8) + '.png',
+      avatar: 'img/avatars/user0' + getRandomNumber(1, 8) + '.png',
     },
     location: {
-      x: getRandomNumber(35.65, 35.7, 5),
-      y: getRandomNumber(139.7, 139.8, 5),
+      x: locationX,
+      y: locationY,
     },
     offer: {
       title: 'Великолепная квартира-студия в центре Токио',
-      address: getRandomNumber(35.65, 35.7, 5) + ', ' + getRandomNumber(139.7, 139.8, 5),
+      address: locationX + ', ' + locationY,
       price: getRandomNumber(10000, 50000),
       type: randomArrayItems(type),
       rooms: getRandomNumber(1, 3),
@@ -49,7 +53,8 @@ const createOffer = () => {
 
   }
 }
+
 //Конструктор
 let obj = new Array(countOfOffer).fill(null).map(() => createOffer());
 
-console.log(obj)
+console.log(obj);
