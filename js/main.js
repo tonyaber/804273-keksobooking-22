@@ -104,4 +104,3 @@ const CreateOffer = () => {
 //Конструктор
 const arrayWithAd = new Array(COUNT_OF_OFFER).fill(null).map(() => CreateOffer());
 
-console.log(arrayWithAd);
