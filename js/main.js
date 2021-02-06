@@ -8,6 +8,7 @@ const Type = {
   HOUSE: 'Дом',
   BUNGALOW: 'Бунгало',
 };
+
 const Feature = {
   WIFI: 'Wi-Fi',
   DISHWASHER: 'Посудомоечная машина',
@@ -16,10 +17,12 @@ const Feature = {
   ELEVATOR: 'Лифт',
   CONDITIONER: 'Кондиционер',
 };
+
 const Price = {
   MIN: 10000,
   MAX: 50000,
 };
+
 const Photos = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg',
   'http://o0.github.io/assets/images/tokyo/hotel2.jpg',
   'http://o0.github.io/assets/images/tokyo/hotel3.jpg'];
@@ -85,10 +88,7 @@ const CreateOffer = () => {
     author: {
       avatar: `img/avatars/user0${getRandomNumber(1, 8)}.png`,
     },
-    location: {
-      x: location.x,
-      y: location.y,
-    },
+    location,
     offer: {
       title: 'Великолепная квартира-студия в центре Токио',
       address: `${location.x}, ${location.y}`,
