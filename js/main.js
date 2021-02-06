@@ -8,7 +8,7 @@ const Type = {
   HOUSE: 'Дом',
   BUNGALOW: 'Бунгало',
 };
-const Features = {
+const Feature = {
   WIFI: 'Wi-Fi',
   DISHWASHER: 'Посудомоечная машина',
   PARKING: 'Парковка',
@@ -23,7 +23,9 @@ const Price = {
 const Photos = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg',
   'http://o0.github.io/assets/images/tokyo/hotel2.jpg',
   'http://o0.github.io/assets/images/tokyo/hotel3.jpg'];
+
 const Time = ['12:00', '13:00', '14:00'];
+
 const Description = [
   'Подходит как туристам, так и бизнесменам. Квартира полностью укомплектована и недавно отремонтирована.',
   'Отличный вид на ночной город, находится в самом центре Токио.',
@@ -60,41 +62,43 @@ const getRandomNumber = (min, max, numberOfDigits = 0) => {
 //Создание массива случайной длины с перемешанными елементами
 const randomArrayItems = (array) => {
   const newArray = array.slice();
+
   for (let i = newArray.length - 1; i > 0; i--) {
-    let j  = Math.floor(Math.random() * (i + 1));
-    let swap = newArray[j];
+    const j  = Math.floor(Math.random() * (i + 1));
+    const swap = newArray[j];
     newArray[j] = newArray[i];
     newArray[i] = swap;
   }
 
-  let count = getRandomNumber(1, newArray.length - 1);
+  const count = getRandomNumber(1, newArray.length - 1);
   return newArray.slice(0, count);
 }
 
 //Функция создания обьекта
 const CreateOffer = () => {
-
-  let locationX = getRandomNumber(Location.x.MIN, Location.x.MAX, Location.x.NUMBER_OF_DIGITS);
-  let locationY = getRandomNumber(Location.y.MIN, Location.y.MAX, Location.y.NUMBER_OF_DIGITS);
+  const location = {
+    x: getRandomNumber(Location.x.MIN, Location.x.MAX, Location.x.NUMBER_OF_DIGITS),
+    y: getRandomNumber(Location.y.MIN, Location.y.MAX, Location.y.NUMBER_OF_DIGITS),
+  }
 
   return {
     author: {
       avatar: `img/avatars/user0${getRandomNumber(1, 8)}.png`,
     },
     location: {
-      x: locationX,
-      y: locationY,
+      x: location.x,
+      y: location.y,
     },
     offer: {
       title: 'Великолепная квартира-студия в центре Токио',
-      address: `${locationX}, ${locationY}`,
+      address: `${location.x}, ${location.y}`,
       price: getRandomNumber(Price.MIN, Price.MAX),
       type: Object.values(Type)[getRandomNumber(0, Object.values(Type).length - 1)],
       rooms: getRandomNumber(1, 3),
       guests: getRandomNumber(0, 2),
       checkin: Time[getRandomNumber(0, Time.length - 1)],
       checkout: Time[getRandomNumber(0, Time.length - 1)],
-      features: randomArrayItems(Object.values(Features)),
+      features: randomArrayItems(Object.values(Feature)),
       description: Description[getRandomNumber(0, Description.length - 1)],
       photos: randomArrayItems(Photos),
     },
@@ -102,5 +106,4 @@ const CreateOffer = () => {
 }
 
 //Конструктор
-const arrayWithAd = new Array(COUNT_OF_OFFER).fill(null).map(() => CreateOffer());
-
+const Adds = new Array(COUNT_OF_OFFER).fill(null).map(() => CreateOffer());
