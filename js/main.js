@@ -54,16 +54,14 @@ const Location = {
 //Функция поиска рандомного числа
 const getRandomNumber = (min, max, numberOfDigits = 0) => {
   if (max >= 0 && min >= 0) {
-    const numberOfSigns = 10 ** numberOfDigits;
 
-    return Math.round((Math.random() * (max - min) + min) * numberOfSigns) / numberOfSigns;
+    return (Math.random() * (max - min) + min).toFixed(numberOfDigits);
   }
-
   throw new Error('Число меньше нуля');
 }
 
 //Создание массива случайной длины с перемешанными елементами
-const randomArrayItems = (array) => {
+const getRandomArray = (array) => {
   const newArray = array.slice();
 
   for (let i = newArray.length - 1; i > 0; i--) {
@@ -98,9 +96,9 @@ const CreateOffer = () => {
       guests: getRandomNumber(0, 2),
       checkin: Time[getRandomNumber(0, Time.length - 1)],
       checkout: Time[getRandomNumber(0, Time.length - 1)],
-      features: randomArrayItems(Object.values(Feature)),
+      features: getRandomArray(Object.values(Feature)),
       description: Description[getRandomNumber(0, Description.length - 1)],
-      photos: randomArrayItems(Photos),
+      photos: getRandomArray(Photos),
     },
   }
 }
