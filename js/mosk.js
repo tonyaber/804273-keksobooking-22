@@ -79,6 +79,5 @@ const CreateOffer = () => {
     },
   }
 }
-const Adds = new Array(COUNT_OF_OFFER).fill(null).map(() => CreateOffer());
-
-export { Adds };
+//
+export { CreateOffer, COUNT_OF_OFFER };
