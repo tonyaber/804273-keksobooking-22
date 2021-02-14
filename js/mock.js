@@ -51,7 +51,6 @@ const Location = {
   },
 }
 
-
 //Функция создания обьекта
 const CreateOffer = () => {
   const location = {
@@ -79,5 +78,5 @@ const CreateOffer = () => {
     },
   }
 }
-//
+
 export { CreateOffer, COUNT_OF_OFFER };

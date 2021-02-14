@@ -22,5 +22,14 @@ const getRandomArray = (array) => {
   const count = getRandomNumber(1, newArray.length - 1);
   return newArray.slice(0, count);
 }
+//Добавить несколько фото в обьявление
+const addPhoto = (photo, array) => {
+  photo.src = array[0];
+  for (let i = 1; i < array.length; i++) {
+    const newPhoto = photo.cloneNode(true);
+    newPhoto.src = array[i];
+    photo.parentElement.appendChild(newPhoto);
+  }
+}
 
-export {  getRandomNumber, getRandomArray };
+export {  getRandomNumber, getRandomArray, addPhoto };
