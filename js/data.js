@@ -1,4 +1,4 @@
-import { addPhoto } from './util.js';
+import { addPhoto, addFeature } from './util.js';
 
 const template = document.querySelector('#card').content;
 const templatePopup = template.querySelector('.popup');
@@ -19,12 +19,13 @@ const createCard = (array) => {
   let time = card.querySelector('.popup__text--time');
   time.textContent = `Заезд после ${array.offer.checkin}, выезд до ${array.offer.checkout}`;
   let features = card.querySelector('.popup__features');
-  features.textContent = array.offer.features;
+  let feature = features.querySelectorAll('.popup__feature');
+  addFeature(feature, array.offer.features, features)
   let description = card.querySelector('.popup__description');
   description.textContent = array.offer.description;
   let photos = card.querySelector('.popup__photos');
   let photo = photos.querySelector('.popup__photo');
-  addPhoto(photo, array.offer.photos);
+  addPhoto(photo, array.offer.photos, photos);
   let avatar = card.querySelector('.popup__avatar');
   avatar.src = array.author.avatar;
   fragment.appendChild(card);

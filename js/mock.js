@@ -72,7 +72,7 @@ const CreateOffer = () => {
       guests: getRandomNumber(0, 2),
       checkin: Time[getRandomNumber(0, Time.length - 1)],
       checkout: Time[getRandomNumber(0, Time.length - 1)],
-      features: getRandomArray(Object.values(Feature)),
+      features: getRandomArray(Object.keys(Feature)),
       description: Description[getRandomNumber(0, Description.length - 1)],
       photos: getRandomArray(Photos),
     },

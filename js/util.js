@@ -23,13 +23,26 @@ const getRandomArray = (array) => {
   return newArray.slice(0, count);
 }
 //Добавить несколько фото в обьявление
-const addPhoto = (photo, array) => {
-  photo.src = array[0];
-  for (let i = 1; i < array.length; i++) {
+const addPhoto = (photo, array, parent) => {
+  parent.innerHTML = '';
+  for (let i = 0; i < array.length; i++) {
     const newPhoto = photo.cloneNode(true);
     newPhoto.src = array[i];
-    photo.parentElement.appendChild(newPhoto);
+    parent.appendChild(newPhoto);
   }
 }
+//Добавить удобства
+const addFeature = (array, features, parent) => {
+  parent.innerHTML = '';
+  features.forEach(element => {
+    let elementFeature = element.toLowerCase();
+    array.forEach(value => {
+      let arrayValue = value.className;
+      if (arrayValue.indexOf(elementFeature) >= 0) {
+        parent.appendChild(value);
+      }
+    });
+  });
+}
 
-export {  getRandomNumber, getRandomArray, addPhoto };
+export {  getRandomNumber, getRandomArray, addPhoto, addFeature };
