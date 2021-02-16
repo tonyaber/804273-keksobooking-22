@@ -22,27 +22,5 @@ const getRandomArray = (array) => {
   const count = getRandomNumber(1, newArray.length - 1);
   return newArray.slice(0, count);
 }
-//Добавить несколько фото в обьявление
-const addPhoto = (photo, array, parent) => {
-  parent.innerHTML = '';
-  for (let i = 0; i < array.length; i++) {
-    const newPhoto = photo.cloneNode(true);
-    newPhoto.src = array[i];
-    parent.appendChild(newPhoto);
-  }
-}
-//Добавить удобства
-const addFeature = (array, features, parent) => {
-  parent.innerHTML = '';
-  features.forEach(element => {
-    let elementFeature = element.toLowerCase();
-    array.forEach(value => {
-      let arrayValue = value.className;
-      if (arrayValue.indexOf(elementFeature) >= 0) {
-        parent.appendChild(value);
-      }
-    });
-  });
-}
 
-export {  getRandomNumber, getRandomArray, addPhoto, addFeature };
+export {  getRandomNumber, getRandomArray };
