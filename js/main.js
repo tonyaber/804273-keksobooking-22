@@ -1,4 +1,4 @@
-import { createCard } from './data.js';
+import { createCard } from './create-card.js';
 import { CreateOffer } from './mock.js';
 import './form.js';
 
@@ -9,5 +9,6 @@ const map = document.querySelector('.map__canvas');
 const card = createCard(offers[0]);
 
 map.appendChild(card);
+
 
 

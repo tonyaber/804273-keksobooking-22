@@ -8,7 +8,7 @@ const addPhoto = (array, photo, parent) => {
   }
 }
 
-//Добавить удобства
+//Добавить удобства (Array.from(array)
 const addFeature = (array, features, parent) => {
   parent.innerHTML = '';
   features.forEach(feature => {
@@ -44,8 +44,8 @@ const createCard = (array) => {
 
   const features = card.querySelector('.popup__features');
   const feature = features.querySelectorAll('.popup__feature');
-  addFeature(feature, array.offer.features, features);
 
+  addFeature(feature, array.offer.features, features);
 
   const photos = card.querySelector('.popup__photos');
   const photo = photos.querySelector('.popup__photo');
@@ -57,3 +57,15 @@ const createCard = (array) => {
 }
 
 export { createCard };
+  
+/*for (переменная of коллекция) {}
+const nF = (array, features, parent) => {
+  const i = Array.from(array);
+  console.log(i)
+  console.log(features)
+  const index = array.findIndex((value) => {
+    return value.indexOf(features[0].toLowerCase()) >= 0;
+  });
+  console.log(index)
+}
+nF()*/
