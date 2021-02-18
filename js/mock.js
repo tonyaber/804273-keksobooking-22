@@ -88,5 +88,5 @@ const CreateOffer = () => {
     },
   }
 }
-
+//const offers = new Array(COUNT_OF_OFFERauthot).fill(null).map(() => CreateOffer());
 export { CreateOffer, COUNT_OF_OFFER };

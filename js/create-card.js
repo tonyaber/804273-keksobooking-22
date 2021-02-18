@@ -24,7 +24,6 @@ const addFeature = (array, features, parent) => {
 
 const template = document.querySelector('#card').content;
 const templatePopup = template.querySelector('.popup');
-const fragment = document.createDocumentFragment();
 
 const createCard = (array) => {
   const card = templatePopup.cloneNode(true);
@@ -44,20 +43,20 @@ const createCard = (array) => {
 
   const features = card.querySelector('.popup__features');
   const feature = features.querySelectorAll('.popup__feature');
-
   addFeature(feature, array.offer.features, features);
 
   const photos = card.querySelector('.popup__photos');
   const photo = photos.querySelector('.popup__photo');
   addPhoto(photo, array.offer.photos, photos);
-
-
-  fragment.appendChild(card);
-  return fragment;
+  return card;
 }
 
 export { createCard };
-  
+/*
+const card = createCard(offers[0]);
+map.appendChild(card);*/
+
+
 /*for (переменная of коллекция) {}
 const nF = (array, features, parent) => {
   const i = Array.from(array);
