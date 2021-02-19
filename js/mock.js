@@ -66,7 +66,7 @@ const CreateOffer = () => {
   const location = {
     x: getRandomNumber(Location.x.MIN, Location.x.MAX, Location.x.NUMBER_OF_DIGITS),
     y: getRandomNumber(Location.y.MIN, Location.y.MAX, Location.y.NUMBER_OF_DIGITS),
-  }
+  };
 
   return {
     author: {
@@ -86,7 +86,7 @@ const CreateOffer = () => {
       description: getRandomElementOfArray(Description),
       photos: getRandomArray(Photos),
     },
-  }
+  };
 }
 //const offers = new Array(COUNT_OF_OFFERauthot).fill(null).map(() => CreateOffer());
 export { CreateOffer, COUNT_OF_OFFER };
