@@ -23,4 +23,7 @@ const getRandomArray = (array) => {
   return newArray.slice(0, count);
 }
 
-export {  getRandomNumber, getRandomArray };
+//Функция создания рамдомного элемента в масиве
+const getRandomElementOfArray = (array) => array[getRandomNumber(0, array.length - 1)];
+
+export { getRandomNumber, getRandomArray, getRandomElementOfArray };

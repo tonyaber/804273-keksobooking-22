@@ -1,4 +1,4 @@
-import { getRandomNumber, getRandomArray } from './util.js';
+import { getRandomNumber, getRandomArray, getRandomElementOfArray } from './util.js';
 
 //количество необходимых обьектов
 const COUNT_OF_OFFER = 10;
@@ -49,7 +49,17 @@ const Location = {
     MAX: 139.8,
     NUMBER_OF_DIGITS: 5,
   },
-}
+};
+
+const Rooms = {
+  MIN: 1,
+  MAX: 3,
+};
+
+const Guests = {
+  MIN: 0,
+  MAX: 2,
+};
 
 //Функция создания обьекта
 const CreateOffer = () => {
@@ -67,16 +77,16 @@ const CreateOffer = () => {
       title: 'Великолепная квартира-студия в центре Токио',
       address: `${location.x}, ${location.y}`,
       price: getRandomNumber(Price.MIN, Price.MAX),
-      type: Object.values(Type)[getRandomNumber(0, Object.values(Type).length - 1)],
-      rooms: getRandomNumber(1, 3),
-      guests: getRandomNumber(0, 2),
-      checkin: Time[getRandomNumber(0, Time.length - 1)],
-      checkout: Time[getRandomNumber(0, Time.length - 1)],
+      type: getRandomElementOfArray(Object.values(Type)),
+      rooms: getRandomNumber(Rooms.MIN, Rooms.MAX),
+      guests: getRandomNumber(Guests.MIN, Guests.MAX),
+      checkin: getRandomElementOfArray(Time),
+      checkout: getRandomElementOfArray(Time),
       features: getRandomArray(Object.keys(Feature)),
-      description: Description[getRandomNumber(0, Description.length - 1)],
+      description: getRandomElementOfArray(Description),
       photos: getRandomArray(Photos),
     },
   }
 }
-
+//const offers = new Array(COUNT_OF_OFFERauthot).fill(null).map(() => CreateOffer());
 export { CreateOffer, COUNT_OF_OFFER };

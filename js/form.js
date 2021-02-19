@@ -1,7 +1,8 @@
-const typeInput = document.querySelector('#type');
-const priceInput = document.querySelector('#price');
-const timeInInput = document.querySelector('#timein');
-const timeOutInput = document.querySelector('#timeout');
+const form = document.querySelector('.ad-form');
+const typeInput = form.querySelector('#type');
+const priceInput = form.querySelector('#price');
+const timeInInput = form.querySelector('#timein');
+const timeOutInput = form.querySelector('#timeout');
 
 const typeArray = ['bungalow', 'flat', 'house', 'palace'];
 const priceArray = [0, 1000, 5000, 10000];
