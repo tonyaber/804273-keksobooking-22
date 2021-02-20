@@ -3,19 +3,26 @@ const setPriceAndTime = () => {
   const typeInput = form.querySelector('#type');
   const timeInInput = form.querySelector('#timein');
   const timeOutInput = form.querySelector('#timeout');
+  const priceInput = form.querySelector('#price');
 
   const typeArray = ['bungalow', 'flat', 'house', 'palace'];
   const priceArray = [0, 1000, 5000, 10000];
 
-  typeInput.addEventListener('change', () => {
+  //установление минимума по умолчанию
+  priceInput.setAttribute('min', priceArray[1]);
+
+  //изменение минимума при выборе типа жилья
+  typeInput.addEventListener('input', () => {
     const index = typeArray.findIndex((value) => {
       return value === typeInput.value;
     });
-    const priceInput = form.querySelector('#price');
-    priceInput.min = priceArray[index];
-    priceInput.placeholder = priceArray[index];
+
+    priceInput.setAttribute('min', priceArray[index]);
+    priceInput.setAttribute('placeholder', priceArray[index]);
+
   });
 
+  //зависимость времени заезда/выезда
   timeInInput.addEventListener('change', () => {
     timeOutInput.value = timeInInput.value;
   });
