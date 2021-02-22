@@ -1,5 +1,22 @@
 import { changeSelected, findIndexInArray } from './set-price-and-time.js'
+//функция блокировки елементов
+const disableOption = (parent) => {
+  const child = parent.querySelectorAll('option');
+  for (let i = 0; i < child.length; i++){
+    child[i].disabled = true;
+  }
+
+}
+//функция разблокировки елементов
+const enableOption = (array, parent) => {
+  const child = parent.querySelectorAll('option');
+  array.forEach(function (item) {
+    child[item].disabled = false;
+  });
+
+}
 const settingForForm = () => {
+
   const form = document.querySelector('.ad-form');
 
   //атрибуты формы
@@ -28,54 +45,31 @@ const settingForForm = () => {
   //елементы количества мест и комнат
   const roomNumber = form.querySelector('#room_number');
   const capacity = form.querySelector('#capacity');
-  const capacityOption = capacity.querySelectorAll('option');
   const roomNumberArray = [1, 2, 3, 100];
   const capacityArray = [3, 2, 1, 0];
+  const roomToCapacity = {
+    1: [2],
+    2: [1, 2],
+    3: [0, 1, 2],
+    100: [3],
+  };
 
-  //по умолчанию для 1 гостя одна комата, блокируем возможность
-  //отправки формы, если пользователь не поменял значения
+
+  //по умолчанию для 1 гостя одна комата
   changeSelected(capacity, 2);
-  capacityOption[0].disabled = true;
-  capacityOption[1].disabled = true;
-  capacityOption[3].disabled = true;
+  disableOption(capacity);
+  enableOption(roomToCapacity[1], capacity);
 
   //слушатель событий для количества гостей,
   //устанавливает селект на нужное поле,
   //блокирует запрещенные варианты количества комнат
   roomNumber.addEventListener('input', () => {
     const index = findIndexInArray(roomNumber, roomNumberArray);
+    const value = roomNumber.value;
     changeSelected(roomNumber, index);
-
-    if (roomNumber.value == 1) {
-
-      capacityOption[0].disabled = true;
-      capacityOption[1].disabled = true;
-      capacityOption[2].disabled = false;
-      capacityOption[3].disabled = true;
-      changeSelected(capacity, 2);
-    }
-    else if (roomNumber.value == 2) {
-      capacityOption[0].disabled = true;
-      capacityOption[1].disabled = false;
-      capacityOption[2].disabled = false;
-      capacityOption[3].disabled = true;
-      changeSelected(capacity, 1);
-
-    }
-    else if (roomNumber.value == 3) {
-      capacityOption[0].disabled = false;
-      capacityOption[1].disabled = false;
-      capacityOption[2].disabled = false;
-      capacityOption[3].disabled = true;
-      changeSelected(capacity, 0);
-    }
-    else if (roomNumber.value == 100) {
-      capacityOption[0].disabled = true;
-      capacityOption[1].disabled = true;
-      capacityOption[2].disabled = true;
-      capacityOption[3].disabled = false;
-      changeSelected(capacity, 3);
-    }
+    disableOption(capacity);
+    enableOption(roomToCapacity[value], capacity);
+    changeSelected(capacity, roomToCapacity[value][0]);
   });
 
   //слушатель событий для поля количества комнат,
@@ -84,9 +78,6 @@ const settingForForm = () => {
     const index = findIndexInArray(capacity, capacityArray);
     changeSelected(capacity, index);
   })
-
 }
-
-
 
 export { settingForForm };

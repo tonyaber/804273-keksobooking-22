@@ -7,7 +7,7 @@ const findIndexInArray = (element, array) => {
 
 //функция переносит селект на тот элемент, который выбран
 const changeSelected = (parent, index) => {
-  const child = parent.querySelectorAll('option')
+  const child = parent.querySelectorAll('option');
   for (let i = 0; i < child.length; i++) {
     child[i].removeAttribute('selected', '');
   }
