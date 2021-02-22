@@ -15,6 +15,7 @@ const enableOption = (array, parent) => {
   });
 
 }
+
 const settingForForm = () => {
 
   const form = document.querySelector('.ad-form');
@@ -77,7 +78,16 @@ const settingForForm = () => {
   capacity.addEventListener('input', () => {
     const index = findIndexInArray(capacity, capacityArray);
     changeSelected(capacity, index);
-  })
-}
+  });
 
+  //проверка при отправке формы, правильно ли указано количество комнат
+  form.addEventListener('submit', (evt) => {
+    const index = findIndexInArray(capacity, capacityArray);
+    const capacityOption = capacity.querySelectorAll('option');
+    if (capacityOption[index].disabled == true) {
+      evt.preventDefault();
+      capacity.setCustomValidity('Измените колиство комнат');
+    }
+  });
+}
 export { settingForForm };
