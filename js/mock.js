@@ -10,7 +10,12 @@ const Type = {
   HOUSE: 'Дом',
   BUNGALOW: 'Бунгало',
 };
-
+const typeToPrice = {
+  bungalow: 0,
+  flat: 1000,
+  house: 5000,
+  palace: 10000,
+};
 const Feature = {
   WIFI: 'Wi-Fi',
   DISHWASHER: 'Посудомоечная машина',
@@ -61,12 +66,21 @@ const Guests = {
   MAX: 2,
 };
 
+const capacityArray = [3, 2, 1, 0];
+
+const roomToCapacity = {
+  1: [2],
+  2: [1, 2],
+  3: [0, 1, 2],
+  100: [3],
+};
+
 //Функция создания обьекта
 const CreateOffer = () => {
   const location = {
     x: getRandomNumber(Location.x.MIN, Location.x.MAX, Location.x.NUMBER_OF_DIGITS),
     y: getRandomNumber(Location.y.MIN, Location.y.MAX, Location.y.NUMBER_OF_DIGITS),
-  }
+  };
 
   return {
     author: {
@@ -86,7 +100,7 @@ const CreateOffer = () => {
       description: getRandomElementOfArray(Description),
       photos: getRandomArray(Photos),
     },
-  }
+  };
 }
 //const offers = new Array(COUNT_OF_OFFERauthot).fill(null).map(() => CreateOffer());
-export { CreateOffer, COUNT_OF_OFFER };
+export { CreateOffer, COUNT_OF_OFFER, typeToPrice, roomToCapacity, capacityArray };
