@@ -18,3 +18,5 @@ const map = adMap();
 createMainIcon(map);
 const offers = new Array(COUNT_OF_OFFER).fill(null).map(() => CreateOffer());
 createIcons(map, offers);
+
+

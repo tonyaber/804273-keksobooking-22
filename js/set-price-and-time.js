@@ -1,9 +1,4 @@
-//функция поиска индекса выбранного элемента
-const findIndexInArray = (element, array) => {
-  return array.findIndex((value) => {
-    return value == element.value;
-  });
-}
+import { TypeToPrice } from './mock.js';
 
 //функция переносит селект на тот элемент, который выбран
 const changeSelected = (parent, index) => {
@@ -22,39 +17,37 @@ const setPriceAndTime = () => {
   const timeOutInput = form.querySelector('#timeout');
   const priceInput = form.querySelector('#price');
 
-  const typeArray = ['bungalow', 'flat', 'house', 'palace'];
-  const priceArray = [0, 1000, 5000, 10000];
-  const timeArray = ['12:00', '13:00', '14:00'];
-
   //установление минимума по умолчанию
-  priceInput.min = priceArray[1];
+  priceInput.min =TypeToPrice['flat'];
 
   //изменение минимума при выборе типа жилья
-  typeInput.addEventListener('input', () => {
-    const index = findIndexInArray(typeInput, typeArray);
-    changeSelected(typeInput, index);
-    priceInput.min = priceArray[index];
-    priceInput.placeholder = priceArray[index];
+  typeInput.addEventListener('input', (evt) => {
+    const index = evt.target.options.selectedIndex;
+    const value = evt.target.value;
+    changeSelected(evt.target, index);
+    priceInput.min = TypeToPrice[value];
+    priceInput.placeholder = TypeToPrice[value];
 
   });
 
   //слушатель событий для времени,
   //ставит селект в выбраное поле,
   //устанавливает зависимость времени въезда/выезда
-  timeInInput.addEventListener('change', () => {
-
-    const index = findIndexInArray(timeInInput, timeArray);
+  timeInInput.addEventListener('change', (evt) => {
+    const index = evt.target.options.selectedIndex;
+    const value = evt.target.value;
     changeSelected(timeInInput, index);
     changeSelected(timeOutInput, index);
-    timeOutInput.value = timeInInput.value;
+    timeOutInput.value = value;
   });
 
-  timeOutInput.addEventListener('change', () => {
-    const index = findIndexInArray(timeOutInput, timeArray);
+  timeOutInput.addEventListener('change', (evt) => {
+    const index = evt.target.options.selectedIndex;
+    const value = evt.target.value;
     changeSelected(timeInInput, index);
     changeSelected(timeOutInput, index);
-    timeInInput.value = timeOutInput.value;
+    timeInInput.value = value;
   });
 }
 
-export { setPriceAndTime, changeSelected, findIndexInArray };
+export { setPriceAndTime, changeSelected };
