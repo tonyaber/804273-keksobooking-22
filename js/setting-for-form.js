@@ -15,32 +15,41 @@ const enableOption = (array, parent) => {
     child[item].disabled = false;
   });
 }
+const formConfig = {
+  METHOD: 'POST',
+  ACTION: 'https://22.javascript.pages.academy/keksobooking',
+  ENCTYPE: 'multipart/form-data',
+  ACCEPT: 'image/*',
+  MIN_LENGTH: 30,
+  MAX_LENGTH: 100,
+  MAX_PRICE: 1000000,
+}
 
 const settingForForm = () => {
   const form = document.querySelector('.ad-form');
 
   //атрибуты формы
-  form.setAttribute('method', 'POST');
-  form.setAttribute('action', 'https://22.javascript.pages.academy/keksobooking');
-  form.setAttribute('enctype', 'multipart/form-data');
+  form.setAttribute('method', formConfig.METHOD);
+  form.setAttribute('action', formConfig.ACTION);
+  form.setAttribute('enctype', formConfig.ENCTYPE);
 
   //атрибуты елементов формы
   const avatar = form.querySelector('#avatar');
   avatar.setAttribute('required', '');
-  avatar.setAttribute('accept', 'image/*');
+  avatar.setAttribute('accept', formConfig.ACCEPT);
 
   const title = form.querySelector('#title');
   title.setAttribute('required', '');
-  title.setAttribute('minlength', 30);
-  title.setAttribute('maxlength', 100);
+  title.setAttribute('minlength', formConfig.MIN_LENGTH);
+  title.setAttribute('maxlength', formConfig.MAX_LENGTH);
 
   const price = form.querySelector('#price');
   price.setAttribute('required', '');
-  price.setAttribute('max', 1000000);
+  price.setAttribute('max', formConfig.MAX_PRICE);
 
   const images = form.querySelector('#images');
   images.setAttribute('required', '');
-  images.setAttribute('accept', 'image/*');
+  images.setAttribute('accept', formConfig.ACCEPT);
 
   //елементы количества мест и комнат
   const roomNumber = form.querySelector('#room_number');

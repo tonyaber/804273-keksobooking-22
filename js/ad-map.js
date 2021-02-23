@@ -56,7 +56,7 @@ const adMap = () => {
 //добавление главного маркера
 const createMainIcon = (map) => {
   const mainIcon = L.icon({
-    iconUrl: '../img/main-pin.svg',
+    iconUrl: 'img/main-pin.svg',
     iconSize: [60, 80],
     iconAnchor: [30, 80],
   });
@@ -72,7 +72,7 @@ const createMainIcon = (map) => {
     },
   ).addTo(map);
 
-  mainMarker.on('moveend', (evt) => {
+  mainMarker.on('move', (evt) => {
     const LocationMarker = {
       X: evt.target.getLatLng().lat.toFixed(5),
       Y: evt.target.getLatLng().lng.toFixed(5),
@@ -86,7 +86,7 @@ const createIcons = (map, array) => {
 
     const card = createCard(array[i]);
     const icon = L.icon({
-      iconUrl: '../img/pin.svg',
+      iconUrl: 'img/pin.svg',
       iconSize: [52, 52],
       iconAnchor: [26, 52],
     });

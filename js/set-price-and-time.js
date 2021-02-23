@@ -13,8 +13,11 @@ const changeSelected = (parent, index) => {
 const setPriceAndTime = () => {
   const form = document.querySelector('.ad-form');
   const typeInput = form.querySelector('#type');
-  const timeInInput = form.querySelector('#timein');
-  const timeOutInput = form.querySelector('#timeout');
+
+  const timeInput = form.querySelector('.ad-form__element--time');
+  const timeIn = timeInput.querySelector('#timein');
+  const timeOut = timeInput.querySelector('#timeout');
+  
   const priceInput = form.querySelector('#price');
 
   //установление минимума по умолчанию
@@ -33,20 +36,13 @@ const setPriceAndTime = () => {
   //слушатель событий для времени,
   //ставит селект в выбраное поле,
   //устанавливает зависимость времени въезда/выезда
-  timeInInput.addEventListener('change', (evt) => {
+  timeInput.addEventListener('change', (evt) => {
     const index = evt.target.options.selectedIndex;
     const value = evt.target.value;
-    changeSelected(timeInInput, index);
-    changeSelected(timeOutInput, index);
-    timeOutInput.value = value;
-  });
-
-  timeOutInput.addEventListener('change', (evt) => {
-    const index = evt.target.options.selectedIndex;
-    const value = evt.target.value;
-    changeSelected(timeInInput, index);
-    changeSelected(timeOutInput, index);
-    timeInInput.value = value;
+    changeSelected(timeIn, index);
+    changeSelected(timeOut, index);
+    timeOut.value = value;
+    timeIn.value = value;
   });
 }
 
