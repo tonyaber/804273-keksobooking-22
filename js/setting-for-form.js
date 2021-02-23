@@ -81,7 +81,7 @@ const settingForForm = () => {
   });
 
   //проверка при отправке формы, правильно ли указано количество комнат
-  const button = form.querySelector('.ad-form__submit');
+  const submitButton = form.querySelector('.ad-form__submit');
 
   const submitForm = () => {
     const index = capacityArray.findIndex((value) => {
@@ -90,13 +90,12 @@ const settingForForm = () => {
 
     if (capacityOption[index].disabled == true) {
       capacity.setCustomValidity('Измените колиство комнат');
-    }
-    else if (capacityOption[index].disabled == false) {
+    } else if (capacityOption[index].disabled == false) {
       capacity.setCustomValidity('');
     }
   }
 
-  button.addEventListener('click', () => {
+  submitButton.addEventListener('click', () => {
     submitForm();
   });
 
