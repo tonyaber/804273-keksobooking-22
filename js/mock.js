@@ -10,7 +10,7 @@ const Type = {
   HOUSE: 'Дом',
   BUNGALOW: 'Бунгало',
 };
-const TypeToPrice = {
+const typeToPrice = {
   bungalow: 0,
   flat: 1000,
   house: 5000,
@@ -103,4 +103,4 @@ const CreateOffer = () => {
   };
 }
 //const offers = new Array(COUNT_OF_OFFERauthot).fill(null).map(() => CreateOffer());
-export { CreateOffer, COUNT_OF_OFFER, TypeToPrice, roomToCapacity, capacityArray };
+export { CreateOffer, COUNT_OF_OFFER, typeToPrice, roomToCapacity, capacityArray };

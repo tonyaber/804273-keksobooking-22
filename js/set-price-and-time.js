@@ -1,4 +1,4 @@
-import { TypeToPrice } from './mock.js';
+import { typeToPrice } from './mock.js';
 
 //функция переносит селект на тот элемент, который выбран
 const changeSelected = (parent, index) => {
@@ -17,19 +17,19 @@ const setPriceAndTime = () => {
   const timeInput = form.querySelector('.ad-form__element--time');
   const timeIn = timeInput.querySelector('#timein');
   const timeOut = timeInput.querySelector('#timeout');
-  
+
   const priceInput = form.querySelector('#price');
 
   //установление минимума по умолчанию
-  priceInput.min =TypeToPrice['flat'];
+  priceInput.min = typeToPrice['flat'];
 
   //изменение минимума при выборе типа жилья
   typeInput.addEventListener('input', (evt) => {
     const index = evt.target.options.selectedIndex;
     const value = evt.target.value;
     changeSelected(evt.target, index);
-    priceInput.min = TypeToPrice[value];
-    priceInput.placeholder = TypeToPrice[value];
+    priceInput.min = typeToPrice[value];
+    priceInput.placeholder = typeToPrice[value];
 
   });
 
