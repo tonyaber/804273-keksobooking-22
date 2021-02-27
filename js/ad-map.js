@@ -1,15 +1,8 @@
 /* global L: readonly */
 import { createCard } from './create-card.js';
-//координаты центра Токио
-const LocationTokio = {
-  X: 35.675,
-  Y: 139.75,
-};
-
-//поле адреса
-const address = document.querySelector('#address');
-address.setAttribute('readonly', 'readonly');
-address.value = `${LocationTokio.X}, ${LocationTokio.Y}`;
+import { LocationTokio } from './mock.js';
+import { form } from './setting-for-form.js';
+import { sucsess } from './fetch.js';
 
 //функция для блокировка елементов формы
 const addDisabled = ( parent ) => {
@@ -31,6 +24,7 @@ const removeDisabled = (parent) => {
   }
 }
 
+
 //создание карты
 const adMap = () => {
   const map = L.map('map-canvas')
@@ -43,16 +37,18 @@ const adMap = () => {
     .setView({
       lat: LocationTokio.X,
       lng: LocationTokio.Y,
-    }, 13);
+    }, 10);
 
   L.tileLayer(
     'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
     {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
     },
+
   ).addTo(map);
   return map;
 }
+
 //добавление главного маркера
 const createMainIcon = (map) => {
   const mainIcon = L.icon({
@@ -63,8 +59,8 @@ const createMainIcon = (map) => {
 
   const mainMarker = L.marker(
     {
-      lat: 35.675,
-      lng: 139.75,
+      lat: LocationTokio.X,
+      lng: LocationTokio.Y,
     },
     {
       draggable: true,
@@ -77,23 +73,34 @@ const createMainIcon = (map) => {
       X: evt.target.getLatLng().lat.toFixed(5),
       Y: evt.target.getLatLng().lng.toFixed(5),
     }
+    const address = document.querySelector('#address');
     address.value = `${LocationMarker.X}, ${LocationMarker.Y}`;
   });
+
+  //удаление маркера при отправке формы
+  form.addEventListener('submit', () => {
+    if (sucsess == true) {
+      mainMarker.remove();
+    }
+  })
+  form.addEventListener('reset', () => mainMarker.remove())
 }
+
 //добавление обычных меток
 const createIcons = (map, array) => {
   for (let i = 0; i < array.length; i++){
-
     const card = createCard(array[i]);
+
     const icon = L.icon({
       iconUrl: 'img/pin.svg',
       iconSize: [52, 52],
       iconAnchor: [26, 52],
     });
+
     const marker = L.marker(
       {
-        lat: array[i].location.x,
-        lng: array[i].location.y,
+        lat: array[i].location.lat,
+        lng: array[i].location.lng,
       },
       {
         icon: icon,
@@ -103,4 +110,4 @@ const createIcons = (map, array) => {
   }
 }
 
-export { addDisabled, adMap, createMainIcon, createIcons };
+export { addDisabled, adMap, createMainIcon, createIcons};

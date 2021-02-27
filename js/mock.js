@@ -4,18 +4,25 @@ import { getRandomNumber, getRandomArray, getRandomElementOfArray } from './util
 const COUNT_OF_OFFER = 10;
 
 //Массивы  и перечисления
+const LocationTokio = {
+  X: 35.675,
+  Y: 139.75,
+};
+
 const Type = {
   PALACE: 'Дворец',
   FLAT: 'Квартира',
   HOUSE: 'Дом',
   BUNGALOW: 'Бунгало',
 };
+
 const typeToPrice = {
   bungalow: 0,
   flat: 1000,
   house: 5000,
   palace: 10000,
 };
+
 const Feature = {
   WIFI: 'Wi-Fi',
   DISHWASHER: 'Посудомоечная машина',
@@ -102,5 +109,6 @@ const CreateOffer = () => {
     },
   };
 }
+
 //const offers = new Array(COUNT_OF_OFFERauthot).fill(null).map(() => CreateOffer());
-export { CreateOffer, COUNT_OF_OFFER, typeToPrice, roomToCapacity, capacityArray };
+export { CreateOffer, LocationTokio, COUNT_OF_OFFER, typeToPrice, roomToCapacity, capacityArray, Type };

@@ -1,3 +1,5 @@
+import { Type } from './mock.js';
+
 //Добавить несколько фото в обьявление
 const addPhoto = (array, photo, parent) => {
   parent.innerHTML = '';
@@ -22,6 +24,14 @@ const addFeature = (array, features, parent) => {
   });
 }
 
+//взять для типа жилья название с перечеслений
+const addType = (array, obj)=>{
+  for (let key in obj) {
+    if (array == key.toLowerCase())
+      return obj[key];
+  }
+}
+
 const template = document.querySelector('#card').content;
 const templatePopup = template.querySelector('.popup');
 
@@ -32,7 +42,8 @@ const createCard = (array) => {
   card.querySelector('.popup__text--address').textContent = array.offer.address;
   card.querySelector('.popup__text--price').
     innerHTML = `${array.offer.price} <span>₽/ночь</span>`;
-  card.querySelector('.popup__type').textContent = array.offer.type;
+
+  card.querySelector('.popup__type').textContent = addType(array.offer.type, Type);
   card.querySelector('.popup__text--capacity').
     textContent = `${array.offer.rooms} комнаты для ${array.offer.guests} гостей`;
   card.querySelector('.popup__text--time').
