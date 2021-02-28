@@ -1,5 +1,5 @@
-import { changeSelected, resetForm } from './util.js';
-import { roomToCapacity, capacityArray, typeToPrice, LocationTokio } from './mock.js';
+import { changeSelected } from './util.js';
+import { roomToCapacity, capacityArray, typeToPrice, LocationTokio } from './data.js';
 
 //функция блокировки елементов
 const disableOption = (parent) => {
@@ -40,7 +40,7 @@ const capacity = form.querySelector('#capacity');
 const capacityOption = capacity.querySelectorAll('option');
 const address = form.querySelector('#address');
 const submitButton = form.querySelector('.ad-form__submit');
-const resetButton = form.querySelector('.ad-form__reset');
+
 
 //функция, что записывает адрес поля в форму
 const addAddress = (location) => {
@@ -144,13 +144,7 @@ const settingForForm = () => {
       capacity.setCustomValidity('');
     }
   }
-
-  submitButton.addEventListener('click', () => submitForm());
-
-  //очистка формы
-  resetButton.addEventListener('click', (evt) => {
-    evt.preventDefault();
-    resetForm(form);
-  })
+  submitButton.addEventListener('click', submitForm);
 }
+
 export { settingForForm, defaultForm, addAddress, form, submitButton };

@@ -1,4 +1,4 @@
-import { Type } from './mock.js';
+import { Type } from './data.js';
 
 //Добавить несколько фото в обьявление
 const addPhoto = (array, photo, parent) => {
@@ -10,7 +10,7 @@ const addPhoto = (array, photo, parent) => {
   }
 }
 
-//Добавить удобства (Array.from(array)
+//Добавить удобства
 const addFeature = (array, features, parent) => {
   parent.innerHTML = '';
   features.forEach(feature => {

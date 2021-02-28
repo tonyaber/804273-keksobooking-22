@@ -12,12 +12,16 @@ fetch('https://22.javascript.pages.academy/keksobooking/data')
     dataDownloadError('Не удалось загрузить данные с сервера. Повторите ошибку позже');
   })
 
-let sucsess = false;
+const checkStatus = (response) => {
+  if (response.ok) {
+    return response;
+  }
+  throw new Error();
+}
 
 const postData = (evt) => {
   evt.preventDefault();
   const formData = new FormData(evt.target);
-
   fetch(
     'https://22.javascript.pages.academy/keksobooking',
     {
@@ -25,20 +29,22 @@ const postData = (evt) => {
       body: formData,
     },
   )
-    .then((response) => {
-      if (response.ok) {
-        showAlertSuccess();
-        resetForm(form);
-        sucsess = true;
-      }
-      else {
-        showAlertError();
-        sucsess = false;
-      }
+    .then(checkStatus)
+    .then(() => {
+      showAlertSuccess();
+      resetForm(form);
     })
-    .catch(() => {
-      showAlertError();
-    })
+    .catch(() => showAlertError())
 }
-form.addEventListener('submit', postData)
-export {sucsess}
+
+//отправка формы
+form.addEventListener('submit', postData);
+
+//очистка формы
+const resetButton = form.querySelector('.ad-form__reset');
+resetButton.addEventListener('click', (evt) => {
+  evt.preventDefault();
+  resetForm(form);
+  form.addEventListener('submit', postData);
+})
+

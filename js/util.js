@@ -1,6 +1,6 @@
-import { createMainIcon } from './ad-map.js';
+import { LocationTokio } from './data.js';
 import { defaultForm } from './setting-for-form.js';
-import { map } from './main.js';
+import { mainMarker } from './main.js';
 
 //Функция поиска рандомного числа
 const getRandomNumber = (min, max, numberOfDigits = 0) => {
@@ -30,7 +30,7 @@ const getRandomElementOfArray = (array) => array[getRandomNumber(0, array.length
 //сообщения при ошибке загрузки данных
 const dataDownloadError = (message) => {
   const alertContainer = document.createElement('div');
-  alertContainer.style.zIndex = 100;
+  alertContainer.style.zIndex = 1000;
   alertContainer.style.position = 'absolute';
   alertContainer.style.right = '10%';
   alertContainer.style.top = '10px';
@@ -55,22 +55,28 @@ const dataDownloadError = (message) => {
 //сообщение при успешной отправке данных
 const showAlertSuccess = () => {
   const template = document.querySelector('#success').content;
-  const message = template.querySelector('.success');
+  const templatePopup = template.querySelector('.success');
+  const message = templatePopup.cloneNode(true);
+  message.style.zIndex = 1000;
   document.body.append(message);
   document.addEventListener('click', () => message.remove());
   document.addEventListener('keydown', (evt) => {
-    if (evt.keyCode == 27) {
+    if (evt.key == 27) {
       message.remove();
     }
   })
 }
+
+//сообщение об ошибке при отправке данных
 const showAlertError = () => {
   const template = document.querySelector('#error').content;
-  const message = template.querySelector('.error');
+  const templatePopup = template.querySelector('.error');
+  const message = templatePopup.cloneNode(true);
+  message.style.zIndex = 1000;
   document.body.append(message);
   document.addEventListener('click', () => message.remove());
   document.addEventListener('keydown', (evt) => {
-    if (evt.keyCode == 27) {
+    if (evt.key == 27) {
       message.remove();
     }
   })
@@ -93,7 +99,7 @@ const resetForm = (form) => {
     selects[i].removeAttribute('selected', '');
   }
   defaultForm();
-  createMainIcon(map);
+  mainMarker.setLatLng([LocationTokio.X, LocationTokio.Y]).update();
 }
 
 export { getRandomNumber, getRandomArray, getRandomElementOfArray, dataDownloadError, showAlertSuccess, showAlertError, resetForm, changeSelected };

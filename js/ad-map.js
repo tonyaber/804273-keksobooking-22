@@ -1,8 +1,6 @@
 /* global L: readonly */
 import { createCard } from './create-card.js';
-import { LocationTokio } from './mock.js';
-import { form } from './setting-for-form.js';
-import { sucsess } from './fetch.js';
+import { LocationTokio } from './data.js';
 
 //функция для блокировка елементов формы
 const addDisabled = ( parent ) => {
@@ -23,7 +21,6 @@ const removeDisabled = (parent) => {
     child.removeAttribute('disabled', 'disabled');
   }
 }
-
 
 //создание карты
 const adMap = () => {
@@ -46,6 +43,7 @@ const adMap = () => {
     },
 
   ).addTo(map);
+
   return map;
 }
 
@@ -77,13 +75,7 @@ const createMainIcon = (map) => {
     address.value = `${LocationMarker.X}, ${LocationMarker.Y}`;
   });
 
-  //удаление маркера при отправке формы
-  form.addEventListener('submit', () => {
-    if (sucsess == true) {
-      mainMarker.remove();
-    }
-  })
-  form.addEventListener('reset', () => mainMarker.remove())
+  return mainMarker;
 }
 
 //добавление обычных меток

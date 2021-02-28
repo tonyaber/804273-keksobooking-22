@@ -1,4 +1,3 @@
-
 import { addDisabled, adMap, createMainIcon } from './ad-map.js';
 import { settingForForm } from './setting-for-form.js';
 import './fetch.js';
@@ -14,8 +13,6 @@ addDisabled(mapFilter);
 
 //создание карты и меток
 const map = adMap();
-createMainIcon(map);
+const mainMarker = createMainIcon(map);
 
-export { map };
-
-
+export { map, mainMarker };
