@@ -1,10 +1,8 @@
-import { setPriceAndTime } from './set-price-and-time.js';
-import { addDisabled, adMap, createMainIcon, createIcons } from './ad-map.js';
-import { CreateOffer, COUNT_OF_OFFER } from './mock.js';
+import { addDisabled, adMap, createMainIcon } from './ad-map.js';
 import { settingForForm } from './setting-for-form.js';
+import './fetch.js';
 
 //настройка формы обьявлений
-setPriceAndTime();
 settingForForm();
 
 //блокировка елементов формы для обьявлений и фильтров для карты
@@ -15,8 +13,6 @@ addDisabled(mapFilter);
 
 //создание карты и меток
 const map = adMap();
-createMainIcon(map);
-const offers = new Array(COUNT_OF_OFFER).fill(null).map(() => CreateOffer());
-createIcons(map, offers);
+const mainMarker = createMainIcon(map);
 
-
+export { map, mainMarker };
