@@ -3,7 +3,7 @@ const LocationTokio = {
   Y: 139.75,
 };
 
-const Type = {
+const HousingType = {
   PALACE: 'Дворец',
   FLAT: 'Квартира',
   HOUSE: 'Дом',
@@ -26,4 +26,7 @@ const roomToCapacity = {
 
 const capacityArray = [3, 2, 1, 0];
 
-export { LocationTokio, typeToPrice, roomToCapacity, capacityArray, Type };
+const urlGet = 'https://22.javascript.pages.academy/keksobooking/data';
+const urlPost = 'https://22.javascript.pages.academy/keksobooking';
+
+export { LocationTokio, typeToPrice, roomToCapacity, capacityArray, HousingType, urlGet, urlPost };

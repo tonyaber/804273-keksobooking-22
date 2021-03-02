@@ -2,6 +2,8 @@ import { LocationTokio } from './data.js';
 import { defaultForm } from './setting-for-form.js';
 import { mainMarker } from './main.js';
 
+const ALERT_SHOW_TIME = 5000;
+
 //Функция поиска рандомного числа
 const getRandomNumber = (min, max, numberOfDigits = 0) => {
   if (max >= 0 && min >= 0) {
@@ -20,7 +22,9 @@ const getRandomArray = (array) => {
     newArray[j] = newArray[i];
     newArray[i] = swap;
   }
+  
   const count = getRandomNumber(1, newArray.length - 1);
+
   return newArray.slice(0, count);
 }
 
@@ -29,10 +33,13 @@ const getRandomElementOfArray = (array) => array[getRandomNumber(0, array.length
 
 //сообщения при ошибке загрузки данных
 const dataDownloadError = (message) => {
+  const mapCanvas = document.querySelector('#map-canvas');
+
   const alertContainer = document.createElement('div');
+
   alertContainer.style.zIndex = 1000;
   alertContainer.style.position = 'absolute';
-  alertContainer.style.right = '10%';
+  alertContainer.style.right = '10px';
   alertContainer.style.top = '10px';
   alertContainer.style.color = 'white';
   alertContainer.style.padding = '10px 3px';
@@ -43,9 +50,7 @@ const dataDownloadError = (message) => {
 
   alertContainer.textContent = message;
 
-  document.body.append(alertContainer);
-
-  const ALERT_SHOW_TIME = 5000;
+  mapCanvas.append(alertContainer);
 
   setTimeout(() => {
     alertContainer.remove();
@@ -57,9 +62,13 @@ const showAlertSuccess = () => {
   const template = document.querySelector('#success').content;
   const templatePopup = template.querySelector('.success');
   const message = templatePopup.cloneNode(true);
+
   message.style.zIndex = 1000;
+
   document.body.append(message);
+
   document.addEventListener('click', () => message.remove());
+
   document.addEventListener('keydown', (evt) => {
     if (evt.key == 27) {
       message.remove();
@@ -72,9 +81,13 @@ const showAlertError = () => {
   const template = document.querySelector('#error').content;
   const templatePopup = template.querySelector('.error');
   const message = templatePopup.cloneNode(true);
+
   message.style.zIndex = 1000;
+
   document.body.append(message);
+
   document.addEventListener('click', () => message.remove());
+
   document.addEventListener('keydown', (evt) => {
     if (evt.key == 27) {
       message.remove();
@@ -95,10 +108,13 @@ const changeSelected = (parent, index) => {
 const resetForm = (form) => {
   form.reset();
   const selects = form.querySelectorAll('option');
+
   for (let i = 0; i < selects.length; i++) {
     selects[i].removeAttribute('selected', '');
   }
+
   defaultForm();
+
   mainMarker.setLatLng([LocationTokio.X, LocationTokio.Y]).update();
 }
 

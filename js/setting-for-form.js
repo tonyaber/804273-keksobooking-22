@@ -1,5 +1,6 @@
 import { changeSelected } from './util.js';
-import { roomToCapacity, capacityArray, typeToPrice, LocationTokio } from './data.js';
+import { roomToCapacity, capacityArray, typeToPrice, LocationTokio, urlPost} from './data.js';
+
 
 //функция блокировки елементов
 const disableOption = (parent) => {
@@ -20,7 +21,7 @@ const enableOption = (array, parent) => {
 //опции формы
 const formConfig = {
   METHOD: 'POST',
-  ACTION: 'https://22.javascript.pages.academy/keksobooking',
+  ACTION: urlPost,
   ENCTYPE: 'multipart/form-data',
   ACCEPT: 'image/*',
   MIN_LENGTH: 30,

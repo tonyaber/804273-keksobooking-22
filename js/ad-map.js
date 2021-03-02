@@ -71,6 +71,7 @@ const createMainIcon = (map) => {
       X: evt.target.getLatLng().lat.toFixed(5),
       Y: evt.target.getLatLng().lng.toFixed(5),
     }
+
     const address = document.querySelector('#address');
     address.value = `${LocationMarker.X}, ${LocationMarker.Y}`;
   });
@@ -98,6 +99,7 @@ const createIcons = (map, array) => {
         icon: icon,
       },
     )
+
     marker.addTo(map).bindPopup(card);
   }
 }
