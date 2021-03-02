@@ -36,13 +36,21 @@ const createCard = (array) => {
     innerHTML = `${array.offer.price} <span>₽/ночь</span>`;
   card.querySelector('.popup__type').
     textContent = HousingType[array.offer.type.toUpperCase()];
+  card.querySelector('.popup__description').
+    textContent = array.offer.description;
+  card.querySelector('.popup__avatar').src = array.author.avatar;
   card.querySelector('.popup__text--capacity').
     textContent = `${array.offer.rooms} комнаты для ${array.offer.guests} гостей`;
   card.querySelector('.popup__text--time').
     textContent = `Заезд после ${array.offer.checkin}, выезд до ${array.offer.checkout}`;
-  card.querySelector('.popup__description').
-    textContent = array.offer.description;
-  card.querySelector('.popup__avatar').src = array.author.avatar;
+
+  if (!array.offer.rooms || !array.offer.guests) {
+    card.querySelector('.popup__text--capacity').classList.add('hidden');
+  }
+
+  if (!parseInt(array.offer.checkin) || !parseInt(array.offer.checkout)) {
+    card.querySelector('.popup__text--time').classList.add('hidden');
+  }
 
   const features = card.querySelector('.popup__features');
   const feature = features.querySelectorAll('.popup__feature');

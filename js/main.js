@@ -1,7 +1,8 @@
-import { addDisabled, adMap, createMainIcon } from './ad-map.js';
+import { addDisabled, adMap, createMainIcon,createIcons } from './ad-map.js';
 import { settingForForm } from './setting-for-form.js';
 import { fetchGet } from './fetch.js';
-
+import { COUNT_OF_ICONS } from './data.js';
+import { filterAds } from './filtr.js';
 
 //настройка формы обьявлений
 settingForForm();
@@ -17,6 +18,9 @@ const map = adMap();
 const mainMarker = createMainIcon(map);
 
 //получение данных с сервера
-fetchGet();
+fetchGet((offers) => {
+  let markers = createIcons(map, offers, COUNT_OF_ICONS);
+  filterAds(markers, offers);
+});
 
 export { map, mainMarker };

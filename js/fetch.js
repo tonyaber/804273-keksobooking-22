@@ -1,19 +1,18 @@
 import { form } from './setting-for-form.js';
-import { map } from './main.js';
-import { createIcons } from './ad-map.js';
+//import { map } from './main.js';
+//import { createIcons } from './ad-map.js';
 import { dataDownloadError, showAlertSuccess, showAlertError, resetForm } from './util.js';
 import { urlGet, urlPost } from './data.js';
 
-const fetchGet = () => {
+const fetchGet = (onSuccess) => {
   fetch(urlGet)
     .then((response) => response.json())
     .then((offers) => {
-      createIcons(map, offers)
+      onSuccess(offers);
     })
     .catch(() => {
       dataDownloadError('Не удалось загрузить данные с сервера. Повторите попытку позже');
     })
-
 }
 
 const checkStatus = (response) => {
@@ -49,7 +48,6 @@ const resetButton = form.querySelector('.ad-form__reset');
 resetButton.addEventListener('click', (evt) => {
   evt.preventDefault();
   resetForm(form);
-  form.addEventListener('submit', postData);
 })
 
 export { fetchGet, urlPost };
