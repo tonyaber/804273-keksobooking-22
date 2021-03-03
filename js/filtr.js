@@ -5,6 +5,7 @@ const filterForPrice = {
   low: [0, 10000],
   middle: [10000, 50000],
   high: [50000, 1000000],
+  any: [0, 1000000],
 }
 
 const filter = document.querySelector('.map__filters');
@@ -17,11 +18,8 @@ const filterAds = (markers, offers) => {
 
     const filterOffers = [];
 
-    for (let i = 0; i < offers.length; i++){
-      if (evt.target.value === offers[i].offer.type ) {
-        filterOffers.push(offers[i]);
-      }
-      else if (evt.target.value === 'any') {
+    for (let i = 0; i < offers.length; i++) {
+      if (evt.target.value === offers[i].offer.type) {
         filterOffers.push(offers[i]);
       }
     }
@@ -37,7 +35,6 @@ const filterAds = (markers, offers) => {
 
     const filterPrice = [];
     for (let i = 0; i < offers.length; i++) {
-
       if (filterForPrice[evt.target.value][0] <= offers[i].offer.price && filterForPrice[evt.target.value][1] > offers[i].offer.price) {
         filterPrice.push(offers[i]);
       }
