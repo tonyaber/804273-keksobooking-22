@@ -21,6 +21,8 @@ const filterAds = (markers, offers) => {
     for (let i = 0; i < offers.length; i++) {
       if (evt.target.value === offers[i].offer.type) {
         filterOffers.push(offers[i]);
+      } else if (evt.target.value === 'any') {
+        filterOffers.push(offers[i]);
       }
     }
 
