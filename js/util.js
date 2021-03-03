@@ -1,9 +1,10 @@
 import { LocationTokio } from './data.js';
 import { defaultForm } from './setting-for-form.js';
-import { mainMarker } from './main.js';
+import { mainMarker, map } from './main.js';
 
 const ALERT_SHOW_TIME = 5000;
 
+const buttonEscape = 'Escape';
 //Функция поиска рандомного числа
 const getRandomNumber = (min, max, numberOfDigits = 0) => {
   if (max >= 0 && min >= 0) {
@@ -22,7 +23,7 @@ const getRandomArray = (array) => {
     newArray[j] = newArray[i];
     newArray[i] = swap;
   }
-  
+
   const count = getRandomNumber(1, newArray.length - 1);
 
   return newArray.slice(0, count);
@@ -70,7 +71,7 @@ const showAlertSuccess = () => {
   document.addEventListener('click', () => message.remove());
 
   document.addEventListener('keydown', (evt) => {
-    if (evt.key == 27) {
+    if (evt.key === buttonEscape) {
       message.remove();
     }
   })
@@ -89,12 +90,19 @@ const showAlertError = () => {
   document.addEventListener('click', () => message.remove());
 
   document.addEventListener('keydown', (evt) => {
-    if (evt.key == 27) {
+    if (evt.key === buttonEscape) {
       message.remove();
     }
   })
 }
-
+//
+//карта по умолчанию
+const defaultMap = () => {
+  map.setView({
+    lat: LocationTokio.X,
+    lng: LocationTokio.Y,
+  }, 10);
+}
 //функция переносит селект на тот элемент, который выбран
 const changeSelected = (parent, index) => {
   const child = parent.querySelectorAll('option');
@@ -118,4 +126,4 @@ const resetForm = (form) => {
   mainMarker.setLatLng([LocationTokio.X, LocationTokio.Y]).update();
 }
 
-export { getRandomNumber, getRandomArray, getRandomElementOfArray, dataDownloadError, showAlertSuccess, showAlertError, resetForm, changeSelected };
+export { getRandomNumber, getRandomArray, getRandomElementOfArray, dataDownloadError, showAlertSuccess, showAlertError, resetForm, defaultMap, changeSelected };

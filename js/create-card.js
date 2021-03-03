@@ -1,24 +1,24 @@
 import { HousingType } from './data.js';
 
 //Добавить несколько фото в обьявление
-const addPhoto = (child, photo, parent) => {
-  parent.innerHTML = '';
-  for (let i = 0; i < photo.length; i++) {
-    const newPhoto = child.cloneNode(true);
-    newPhoto.src = photo[i];
-    parent.appendChild(newPhoto);
+const addPhoto = (templatePhoto, adPhoto, templatePhotoParent) => {
+  templatePhotoParent.innerHTML = '';
+  for (let i = 0; i < adPhoto.length; i++) {
+    const newPhoto = templatePhoto.cloneNode(true);
+    newPhoto.src = adPhoto[i];
+    templatePhotoParent.appendChild(newPhoto);
   }
 }
 
 //Добавить удобства
-const addFeature = (child, features, parent) => {
-  parent.innerHTML = '';
-  features.forEach(feature => {
+const addFeature = (templateFeature, adFeature, templateFeatureParent) => {
+  templateFeatureParent.innerHTML = '';
+  adFeature.forEach(feature => {
     const featureNew = feature.toLowerCase();
-    child.forEach(value => {
+    templateFeature.forEach(value => {
       const valueNew = value.className;
       if (valueNew.indexOf(featureNew) >= 0) {
-        parent.appendChild(value);
+        templateFeatureParent.appendChild(value);
       }
     });
   });

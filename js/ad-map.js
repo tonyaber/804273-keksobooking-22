@@ -1,6 +1,12 @@
 /* global L: readonly */
 import { createCard } from './create-card.js';
 import { LocationTokio } from './data.js';
+import { form } from './setting-for-form.js';
+
+const TILE_LAYER_URL = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+const TILE_LAYER_ATTRIBUTION = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
+const MAIN_ICON_URL = 'img/main-pin.svg';
+const SIMPLE_ICON_URL = 'img/pin.svg';
 
 //функция для блокировка елементов формы
 const addDisabled = ( parent ) => {
@@ -26,10 +32,9 @@ const removeDisabled = (parent) => {
 const adMap = () => {
   const map = L.map('map-canvas')
     .on('load', () => {
-      const adForm = document.querySelector('.ad-form');
-      const mapFilter = document.querySelector('.map__filters');
-      removeDisabled(adForm);
-      removeDisabled(mapFilter);
+
+      removeDisabled(form);
+
     })
     .setView({
       lat: LocationTokio.X,
@@ -37,9 +42,9 @@ const adMap = () => {
     }, 10);
 
   L.tileLayer(
-    'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+    TILE_LAYER_URL,
     {
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+      attribution: TILE_LAYER_ATTRIBUTION,
     },
 
   ).addTo(map);
@@ -50,7 +55,7 @@ const adMap = () => {
 //добавление главного маркера
 const createMainIcon = (map) => {
   const mainIcon = L.icon({
-    iconUrl: 'img/main-pin.svg',
+    iconUrl: MAIN_ICON_URL,
     iconSize: [60, 80],
     iconAnchor: [30, 80],
   });
@@ -88,7 +93,7 @@ const createIcons = (map, array, count) => {
     const card = createCard(array[i]);
 
     const icon = L.icon({
-      iconUrl: 'img/pin.svg',
+      iconUrl: SIMPLE_ICON_URL,
       iconSize: [52, 52],
       iconAnchor: [26, 52],
     });
@@ -115,4 +120,4 @@ const deleteMarkers = (markers) => {
   }
 }
 
-export { addDisabled, adMap, createMainIcon, createIcons, deleteMarkers};
+export { addDisabled, removeDisabled, adMap, createMainIcon, createIcons, deleteMarkers};

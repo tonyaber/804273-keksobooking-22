@@ -1,6 +1,5 @@
 import { changeSelected } from './util.js';
-import { roomToCapacity, capacityArray, typeToPrice, LocationTokio, urlPost} from './data.js';
-
+import { roomToCapacity, capacityArray, typeToPrice, LocationTokio, URL_POST} from './data.js';
 
 //функция блокировки елементов
 const disableOption = (parent) => {
@@ -21,7 +20,7 @@ const enableOption = (array, parent) => {
 //опции формы
 const formConfig = {
   METHOD: 'POST',
-  ACTION: urlPost,
+  ACTION: URL_POST,
   ENCTYPE: 'multipart/form-data',
   ACCEPT: 'image/*',
   MIN_LENGTH: 30,
@@ -136,7 +135,7 @@ const settingForForm = () => {
   //проверка при отправке формы, правильно ли указано количество комнат
   const submitForm = () => {
     const index = capacityArray.findIndex((value) => {
-      return value == capacity.value;
+      return value === capacity.value;
     });
 
     if (capacityOption[index].disabled == true) {
