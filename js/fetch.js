@@ -1,16 +1,19 @@
-import { map } from './main.js';
-import { createIcons } from './ad-map.js';
-import { dataDownloadError, showAlertSuccess, showAlertError, resetForm } from './util.js';
 import { form } from './setting-for-form.js';
+//import { map } from './main.js';
+//import { createIcons } from './ad-map.js';
+import { dataDownloadError, showAlertSuccess, showAlertError, resetForm } from './util.js';
+import { urlGet, urlPost } from './data.js';
 
-fetch('https://22.javascript.pages.academy/keksobooking/data')
-  .then((response) => response.json())
-  .then((offers) => {
-    createIcons(map, offers)
-  })
-  .catch(() => {
-    dataDownloadError('Не удалось загрузить данные с сервера. Повторите ошибку позже');
-  })
+const fetchGet = (onSuccess) => {
+  fetch(urlGet)
+    .then((response) => response.json())
+    .then((offers) => {
+      onSuccess(offers);
+    })
+    .catch(() => {
+      dataDownloadError('Не удалось загрузить данные с сервера. Повторите попытку позже');
+    })
+}
 
 const checkStatus = (response) => {
   if (response.ok) {
@@ -23,7 +26,7 @@ const postData = (evt) => {
   evt.preventDefault();
   const formData = new FormData(evt.target);
   fetch(
-    'https://22.javascript.pages.academy/keksobooking',
+    urlPost,
     {
       method: 'POST',
       body: formData,
@@ -45,6 +48,6 @@ const resetButton = form.querySelector('.ad-form__reset');
 resetButton.addEventListener('click', (evt) => {
   evt.preventDefault();
   resetForm(form);
-  form.addEventListener('submit', postData);
 })
 
+export { fetchGet, urlPost };

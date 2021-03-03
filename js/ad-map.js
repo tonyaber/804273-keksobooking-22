@@ -71,6 +71,7 @@ const createMainIcon = (map) => {
       X: evt.target.getLatLng().lat.toFixed(5),
       Y: evt.target.getLatLng().lng.toFixed(5),
     }
+
     const address = document.querySelector('#address');
     address.value = `${LocationMarker.X}, ${LocationMarker.Y}`;
   });
@@ -79,8 +80,11 @@ const createMainIcon = (map) => {
 }
 
 //добавление обычных меток
-const createIcons = (map, array) => {
-  for (let i = 0; i < array.length; i++){
+const createIcons = (map, array, count) => {
+
+  let markerArr = [];
+
+  for (let i = 0; i < count; i++){
     const card = createCard(array[i]);
 
     const icon = L.icon({
@@ -99,7 +103,16 @@ const createIcons = (map, array) => {
       },
     )
     marker.addTo(map).bindPopup(card);
+    markerArr.push(marker);
+  }
+  return markerArr;
+}
+
+//удаление маркеров
+const deleteMarkers = (markers) => {
+  for(let i = 0; i < markers.length; i++) {
+    markers[i].remove();
   }
 }
 
-export { addDisabled, adMap, createMainIcon, createIcons};
+export { addDisabled, adMap, createMainIcon, createIcons, deleteMarkers};
