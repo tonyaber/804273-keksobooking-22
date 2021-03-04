@@ -14,10 +14,9 @@ const addPhoto = (templatePhoto, adPhoto, templatePhotoParent) => {
 const addFeature = (templateFeature, adFeature, templateFeatureParent) => {
   templateFeatureParent.innerHTML = '';
   adFeature.forEach(feature => {
-    const featureNew = feature.toLowerCase();
     templateFeature.forEach(value => {
-      const valueNew = value.className;
-      if (valueNew.indexOf(featureNew) >= 0) {
+      const valueNew = value.className.substring(31);
+      if (valueNew ===feature) {
         templateFeatureParent.appendChild(value);
       }
     });

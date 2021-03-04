@@ -1,6 +1,7 @@
 import { COUNT_OF_ICONS } from './data.js';
 import { deleteMarkers, createIcons } from './ad-map.js';
 import { map } from './main.js';
+
 const filterForPrice = {
   low: [0, 10000],
   middle: [10000, 50000],
@@ -10,37 +11,158 @@ const filterForPrice = {
 
 const filterForFeatures = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
 
-const filter = document.querySelector('.map__filters');
-const HousingType = filter.querySelector('#housing-type');
-const housingPrice = filter.querySelector('#housing-price');
-const housingRooms = filter.querySelector('#housing-rooms');
-const housingGuests = filter.querySelector('#housing-guests');
-const housingFeatures = filter.querySelector('#housing-features');
+const mapFilter = document.querySelector('.map__filters');
+const housingType = mapFilter.querySelector('#housing-type');
+const housingPrice = mapFilter.querySelector('#housing-price');
+const housingRooms = mapFilter.querySelector('#housing-rooms');
+const housingGuests = mapFilter.querySelector('#housing-guests');
+const housingFeatures = mapFilter.querySelector('#housing-features');
 const housingFeaturesCheck = housingFeatures.querySelectorAll('input[name="features"]');
 
+const typeFilter = (advert, filter) => {
+  if (filter === 'any' || advert.offer.type === filter) {
+    return true;
+  }
+  return false;
+}
+
+const priceFilter = (advert, filter) => {
+  if (advert.offer.price >= filterForPrice[filter][0] && advert.offer.price < filterForPrice[filter][1]) {
+    return true;
+  }
+  else if (filter === 'any') {
+    return true;
+  }
+  return false;
+}
+
+const roomFilter = (advert, filter) => {
+  if (filter === 'any' || filter === String(advert.offer.rooms)) {
+    return true;
+  }
+  return false;
+}
+
+const guestFilter = (advert, filter) => {
+  if (filter === 'any' || filter === String(advert.offer.guests)) {
+    return true;
+  }
+  return false;
+}
+
+const featureFilter = (advert, filter) => {
+  if (advert.offer.features.includes(filter)){
+    return true;
+  }
+  return false;
+}
+
+const intersectionOfFilters  = (arrayfirst, arraysecond) => {
+  let intersection = arrayfirst.filter(x => arraysecond.includes(x));
+  return intersection
+}
+
 const filterAds = (markers, offers) => {
-  HousingType.addEventListener('change', (evt) => {
-    const typeValue = evt.target.value;
+  let type = 'any';
+  let filteredAddType = offers;
+  let filteredAddPrice = offers;
+  let filteredAddRoom = offers;
+  let filteredAddGuest = offers;
+  let filteredAddFeature = offers;
+  let featuresList = [];
 
-    deleteMarkers(markers);
-
-    const filterOffers = [];
-
-    for (let i = 0; i < offers.length; i++) {
-      if (typeValue === offers[i].offer.type) {
-        filterOffers.push(offers[i]);
-      } else if (typeValue === 'any') {
-        filterOffers.push(offers[i]);
-      }
-    }
-
-    const newCountOficons = filterOffers.length < COUNT_OF_ICONS ?
-      filterOffers.length : COUNT_OF_ICONS;
-
-    markers = createIcons(map, filterOffers, newCountOficons);
+  housingType.addEventListener('change', (evt) => {
+    type = evt.target.value;
+    filteredAddType = offers.filter((offer) => typeFilter(offer, type));
   })
 
   housingPrice.addEventListener('change', (evt) => {
+    type = evt.target.value;
+    filteredAddPrice = offers.filter((offer) => priceFilter(offer, type));
+  })
+
+  housingRooms.addEventListener('change', (evt) => {
+    type = evt.target.value;
+    filteredAddRoom = offers.filter((offer) => roomFilter(offer, type));
+  })
+
+  housingGuests.addEventListener('change', (evt) => {
+    type = evt.target.value;
+    filteredAddGuest = offers.filter((offer) => guestFilter(offer, type));
+  })
+
+  housingFeatures.addEventListener('change', (evt) => {
+    type = evt.target.value;
+    const index = filterForFeatures.findIndex((value) => {
+      return value === type;
+    });
+    if (featuresList.length === 0) {
+      filteredAddFeature = [];
+      if (housingFeaturesCheck[index].checked) {
+        filteredAddFeature = offers.filter((offer) => featureFilter(offer, type));
+        featuresList.push(type);
+      }
+    }
+    else if (housingFeaturesCheck[index].checked) {
+      filteredAddFeature = filteredAddFeature.filter((offer) => featureFilter(offer, type));
+      featuresList.push(type)
+    }
+    else {
+      featuresList = featuresList.filter(function (item) {
+        return item !== type;
+      })
+
+      filteredAddFeature = [];
+
+      for (let i = 0; i < offers.length; i++){
+        const isElementIncludes = (element) => {
+          return offers[i].offer.features.includes(element);
+        }
+
+        if (featuresList.every(isElementIncludes)) {
+          filteredAddFeature.push(offers[i])
+        }
+      }
+    }
+  })
+
+  mapFilter.addEventListener('change', () => {
+    deleteMarkers(markers);
+    let filteredAdd = intersectionOfFilters(offers, filteredAddType);
+    filteredAdd = intersectionOfFilters(filteredAdd, filteredAddPrice);
+    filteredAdd = intersectionOfFilters(filteredAdd, filteredAddRoom);
+    filteredAdd = intersectionOfFilters(filteredAdd, filteredAddGuest);
+    filteredAdd = intersectionOfFilters(filteredAdd, filteredAddFeature);
+
+    const newCountOficons = filteredAdd.length < COUNT_OF_ICONS ?
+      filteredAdd.length : COUNT_OF_ICONS;
+
+    markers = createIcons(map, filteredAdd, newCountOficons);
+  })
+}
+/*
+const filterType = (markers, offers) => {
+
+  mapFilter.addEventListener('change', (evt) => {
+
+    const typeValue = evt.target.value;
+    let filterType = [];
+    deleteMarkers(markers);
+    filterType = [];
+
+    for (let i = 0; i < offers.length; i++) {
+      if (typeValue === offers[i].offer.type) {
+        filterType.push(offers[i]);
+      } else if (typeValue === 'any') {
+        filterType.push(offers[i]);
+      }
+    }
+
+    let newCountOficons = filterType.length < COUNT_OF_ICONS ?
+      filterType.length : COUNT_OF_ICONS;
+
+    markers = createIcons(map, filterType, newCountOficons);
+
     deleteMarkers(markers);
 
     const priceValue = evt.target.value;
@@ -55,11 +177,18 @@ const filterAds = (markers, offers) => {
         filterPrice.push(offers[i]);
       }
     }
-    const newCountOficons = filterPrice.length < COUNT_OF_ICONS ?
+    newCountOficons = filterPrice.length < COUNT_OF_ICONS ?
       filterPrice.length : COUNT_OF_ICONS;
 
     markers = createIcons(map, filterPrice, newCountOficons);
+
   })
+
+}
+
+const filterPrice = (markers, offers) => {
+
+
 
   housingRooms.addEventListener('change', (evt) => {
     const roomValue = evt.target.value;
@@ -114,6 +243,7 @@ const filterAds = (markers, offers) => {
       return value === featureValue;
     });
 
+
     if (filterFeatures.length === 0) {
       if (housingFeaturesCheck[index].checked) {
         for (let j = 0; j < offers.length; j++) {
@@ -157,5 +287,5 @@ const filterAds = (markers, offers) => {
 
 
 }
-
-export { filterAds, filter };
+*/
+export { filterAds, mapFilter};
