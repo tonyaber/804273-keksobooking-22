@@ -1,5 +1,7 @@
 import { HousingType } from './data.js';
 
+const featuresArray = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
+
 //Добавить несколько фото в обьявление
 const addPhoto = (templatePhoto, adPhoto, templatePhotoParent) => {
   templatePhotoParent.innerHTML = '';
@@ -8,23 +10,36 @@ const addPhoto = (templatePhoto, adPhoto, templatePhotoParent) => {
     newPhoto.src = adPhoto[i];
     templatePhotoParent.appendChild(newPhoto);
   }
-}
+};
 
 //Добавить удобства
 const addFeature = (templateFeature, adFeature, templateFeatureParent) => {
   templateFeatureParent.innerHTML = '';
   adFeature.forEach(feature => {
     templateFeature.forEach(value => {
-      const valueNew = value.className.substring(31);
-      if (valueNew ===feature) {
+      if (value.dataset.name === feature) {
         templateFeatureParent.appendChild(value);
       }
     });
   });
-}
+};
+
+//добавить дата-атрибуты списку удобств
+const getDataAtributes = (features, feature) => {
+  let i = 0;
+  feature.forEach(featureElement => {
+    featureElement.setAttribute('data-name', featuresArray[i]);
+    i++;
+  });
+};
 
 const template = document.querySelector('#card').content;
 const templatePopup = template.querySelector('.popup');
+const featuresTemplate = templatePopup.querySelector('.popup__features');
+const featureTemplate = featuresTemplate.querySelectorAll('.popup__feature');
+
+getDataAtributes(featuresTemplate, featureTemplate);
+
 
 const createCard = (array) => {
   const card = templatePopup.cloneNode(true);
@@ -59,22 +74,6 @@ const createCard = (array) => {
   const photo = photos.querySelector('.popup__photo');
   addPhoto(photo, array.offer.photos, photos);
   return card;
-}
+};
 
 export { createCard };
-/*
-const card = createCard(offers[0]);
-map.appendChild(card);*/
-
-
-/*for (переменная of коллекция) {}
-const nF = (array, features, parent) => {
-  const i = Array.from(array);
-  console.log(i)
-  console.log(features)
-  const index = array.findIndex((value) => {
-    return value.indexOf(features[0].toLowerCase()) >= 0;
-  });
-  console.log(index)
-}
-nF()*/

@@ -2,21 +2,21 @@ import { form } from './setting-for-form.js';
 import { dataDownloadError, showAlertSuccess, showAlertError, resetForm, defaultMap } from './util.js';
 import { URL_GET, URL_POST } from './data.js';
 
-const fetchGet = (onSuccess) => {
+const dataGet = (onSuccess) => {
   fetch(URL_GET)
     .then((response) => response.json())
     .then((offers) => onSuccess(offers))
     .catch(() => dataDownloadError('Не удалось загрузить данные с сервера. Повторите попытку позже'))
-}
+};
 
 const checkStatus = (response) => {
   if (response.ok) {
     return response;
   }
   throw new Error();
-}
+};
 
-const postData = (evt) => {
+const dataPost = (evt) => {
   evt.preventDefault();
   const formData = new FormData(evt.target);
   fetch(
@@ -32,11 +32,11 @@ const postData = (evt) => {
       resetForm(form);
       defaultMap();
     })
-    .catch(() => showAlertError())
-}
+    .catch(() => showAlertError());
+};
 
 //отправка формы
-form.addEventListener('submit', postData);
+form.addEventListener('submit', dataPost);
 
 //очистка формы
 const resetButton = form.querySelector('.ad-form__reset');
@@ -44,6 +44,6 @@ resetButton.addEventListener('click', (evt) => {
   evt.preventDefault();
   resetForm(form);
   defaultMap();
-})
+});
 
-export { fetchGet };
+export { dataGet };

@@ -1,5 +1,5 @@
 import { changeSelected } from './util.js';
-import { roomToCapacity, capacityArray, typeToPrice, LocationTokio, URL_POST} from './data.js';
+import { roomToCapacity, typeToPrice, LocationTokio, URL_POST} from './data.js';
 
 //функция блокировки елементов
 const disableOption = (parent) => {
@@ -7,15 +7,15 @@ const disableOption = (parent) => {
   for (let i = 0; i < child.length; i++) {
     child[i].disabled = true;
   }
-}
+};
 
 //функция разблокировки елементов
 const enableOption = (array, parent) => {
   const child = parent.querySelectorAll('option');
-  array.forEach( item => {
+  array.forEach(item => {
     child[item].disabled = false;
   })
-}
+};
 
 //опции формы
 const formConfig = {
@@ -26,7 +26,7 @@ const formConfig = {
   MIN_LENGTH: 30,
   MAX_LENGTH: 100,
   MAX_PRICE: 1000000,
-}
+};
 
 //елементы формы
 const form = document.querySelector('.ad-form');
@@ -37,7 +37,6 @@ const timeOut = timeInput.querySelector('#timeout');
 const priceInput = form.querySelector('#price');
 const roomNumber = form.querySelector('#room_number');
 const capacity = form.querySelector('#capacity');
-const capacityOption = capacity.querySelectorAll('option');
 const address = form.querySelector('#address');
 const submitButton = form.querySelector('.ad-form__submit');
 
@@ -46,7 +45,7 @@ const submitButton = form.querySelector('.ad-form__submit');
 const addAddress = (location) => {
   address.setAttribute('readonly', 'readonly');
   address.value = `${location.X}, ${location.Y}`;
-}
+};
 
 //поля формы по умолчанию
 const defaultForm = () => {
@@ -62,7 +61,7 @@ const defaultForm = () => {
   changeSelected(capacity, 2);
   disableOption(capacity);
   enableOption(roomToCapacity[1], capacity);
-}
+};
 
 //настройка формы
 const settingForForm = () => {
@@ -131,20 +130,6 @@ const settingForForm = () => {
     const index = evt.target.options.selectedIndex;
     changeSelected(evt.target, index);
   });
-
-  //проверка при отправке формы, правильно ли указано количество комнат
-  const submitForm = () => {
-    const index = capacityArray.findIndex((value) => {
-      return value === capacity.value;
-    });
-
-    if (capacityOption[index].disabled == true) {
-      capacity.setCustomValidity('Измените колиство комнат');
-    } else if (capacityOption[index].disabled == false) {
-      capacity.setCustomValidity('');
-    }
-  }
-  submitButton.addEventListener('click', submitForm);
-}
+};
 
 export { settingForForm, defaultForm, addAddress, form, submitButton };

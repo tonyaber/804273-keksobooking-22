@@ -9,14 +9,14 @@ const MAIN_ICON_URL = 'img/main-pin.svg';
 const SIMPLE_ICON_URL = 'img/pin.svg';
 
 //функция для блокировка елементов формы
-const addDisabled = ( parent ) => {
+const addDisabled = (parent) => {
   parent.classList.add('ad-form--disabled');
 
   for (let i = 0; i < parent.children.length; i++) {
     const child = parent.children[i];
     child.setAttribute('disabled', 'disabled');
   }
-}
+};
 
 //функция для снятия блокировки елементов формы
 const removeDisabled = (parent) => {
@@ -26,15 +26,13 @@ const removeDisabled = (parent) => {
     const child = parent.children[i];
     child.removeAttribute('disabled', 'disabled');
   }
-}
+};
 
 //создание карты
 const adMap = () => {
   const map = L.map('map-canvas')
     .on('load', () => {
-
       removeDisabled(form);
-
     })
     .setView({
       lat: LocationTokio.X,
@@ -50,7 +48,7 @@ const adMap = () => {
   ).addTo(map);
 
   return map;
-}
+};
 
 //добавление главного маркера
 const createMainIcon = (map) => {
@@ -75,18 +73,16 @@ const createMainIcon = (map) => {
     const LocationMarker = {
       X: evt.target.getLatLng().lat.toFixed(5),
       Y: evt.target.getLatLng().lng.toFixed(5),
-    }
-
+    };
     const address = document.querySelector('#address');
     address.value = `${LocationMarker.X}, ${LocationMarker.Y}`;
   });
 
   return mainMarker;
-}
+};
 
 //добавление обычных меток
 const createIcons = (map, array, count) => {
-
   let markerArr = [];
 
   for (let i = 0; i < count; i++){
@@ -106,18 +102,18 @@ const createIcons = (map, array, count) => {
       {
         icon: icon,
       },
-    )
+    );
     marker.addTo(map).bindPopup(card);
     markerArr.push(marker);
   }
   return markerArr;
-}
+};
 
 //удаление маркеров
 const deleteMarkers = (markers) => {
   for(let i = 0; i < markers.length; i++) {
     markers[i].remove();
   }
-}
+};
 
 export { addDisabled, removeDisabled, adMap, createMainIcon, createIcons, deleteMarkers};

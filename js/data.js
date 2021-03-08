@@ -29,6 +29,5 @@ const roomToCapacity = {
   100: [3],
 };
 
-const capacityArray = [3, 2, 1, 0];
 
-export { COUNT_OF_ICONS, LocationTokio, typeToPrice, roomToCapacity, capacityArray, HousingType, URL_GET, URL_POST };
+export { COUNT_OF_ICONS, LocationTokio, typeToPrice, roomToCapacity, HousingType, URL_GET, URL_POST };
