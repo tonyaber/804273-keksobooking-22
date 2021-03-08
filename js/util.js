@@ -6,7 +6,7 @@ const ALERT_SHOW_TIME = 5000;
 
 const main = document.querySelector('main');
 
-const buttonEscape = 'Escape';
+const BUTTON_ESCAPE = 'Escape';
 //Функция поиска рандомного числа
 const getRandomNumber = (min, max, numberOfDigits = 0) => {
   if (max >= 0 && min >= 0) {
@@ -24,7 +24,7 @@ const getRandomArray = (array) => {
     const swap = newArray[j];
     newArray[j] = newArray[i];
     newArray[i] = swap;
-  };
+  }
 
   const count = getRandomNumber(1, newArray.length - 1);
 
@@ -71,10 +71,8 @@ const showAlertSuccess = () => {
   main.append(message);
 
   const onDocumentEscKeydownInSuccess = (evt) => {
-    if (evt.key === buttonEscape) {
-      message.remove();
-      document.removeEventListener('click', onDocumentClickInSuccess);
-      document.removeEventListener('keydown', onDocumentEscKeydownInSuccess);
+    if (evt.key === BUTTON_ESCAPE) {
+      onDocumentClickInSuccess();
     }
   };
 
@@ -98,12 +96,10 @@ const showAlertError = () => {
   message.style.zIndex = 1000;
 
   main.append(message);
-  
+
   const onDocumentEscKeydownInError = (evt) => {
-    if (evt.key === buttonEscape) {
-      message.remove();
-      document.removeEventListener('click', onDocumentClickInError);
-      document.removeEventListener('keydown', onDocumentEscKeydownInError);
+    if (evt.key === BUTTON_ESCAPE) {
+      onDocumentClickInError();
     }
   };
 
@@ -126,12 +122,12 @@ const defaultMap = () => {
   }, 10);
 };
 //функция переносит селект на тот элемент, который выбран
-const changeSelected = (parent, index) => {
-  const child = parent.querySelectorAll('option');
-  for (let i = 0; i < child.length; i++) {
-    child[i].removeAttribute('selected', '');
+const changeSelected = (select, index) => {
+  const option = select.querySelectorAll('option');
+  for (let i = 0; i < option.length; i++) {
+    option[i].removeAttribute('selected', '');
   }
-  child[index].setAttribute('selected', '');
+  option[index].setAttribute('selected', '');
 };
 
 //очистить форму

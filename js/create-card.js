@@ -25,7 +25,7 @@ const addFeature = (templateFeature, adFeature, templateFeatureParent) => {
 };
 
 //добавить дата-атрибуты списку удобств
-const getDataAtributes = (features, feature) => {
+const getDataAtributes = (feature) => {
   let i = 0;
   feature.forEach(featureElement => {
     featureElement.setAttribute('data-name', featuresArray[i]);
@@ -38,7 +38,7 @@ const templatePopup = template.querySelector('.popup');
 const featuresTemplate = templatePopup.querySelector('.popup__features');
 const featureTemplate = featuresTemplate.querySelectorAll('.popup__feature');
 
-getDataAtributes(featuresTemplate, featureTemplate);
+getDataAtributes(featureTemplate);
 
 
 const createCard = (array) => {

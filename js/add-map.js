@@ -9,27 +9,27 @@ const MAIN_ICON_URL = 'img/main-pin.svg';
 const SIMPLE_ICON_URL = 'img/pin.svg';
 
 //функция для блокировка елементов формы
-const addDisabled = (parent) => {
-  parent.classList.add('ad-form--disabled');
+const addDisabled = (form) => {
+  form.classList.add('ad-form--disabled');
 
-  for (let i = 0; i < parent.children.length; i++) {
-    const child = parent.children[i];
-    child.setAttribute('disabled', 'disabled');
+  for (let i = 0; i < form.children.length; i++) {
+    const childForm = form.children[i];
+    childForm.setAttribute('disabled', 'disabled');
   }
 };
 
 //функция для снятия блокировки елементов формы
-const removeDisabled = (parent) => {
-  parent.classList.remove('ad-form--disabled');
+const removeDisabled = (form) => {
+  form.classList.remove('ad-form--disabled');
 
-  for (let i = 0; i < parent.children.length; i++) {
-    const child = parent.children[i];
-    child.removeAttribute('disabled', 'disabled');
+  for (let i = 0; i < form.children.length; i++) {
+    const childForm = form.children[i];
+    childForm.removeAttribute('disabled', 'disabled');
   }
 };
 
 //создание карты
-const adMap = () => {
+const addMap = () => {
   const map = L.map('map-canvas')
     .on('load', () => {
       removeDisabled(form);
@@ -83,9 +83,9 @@ const createMainIcon = (map) => {
 
 //добавление обычных меток
 const createIcons = (map, array, count) => {
-  let markerArr = [];
+  const markers = [];
 
-  for (let i = 0; i < count; i++){
+  for (let i = 0; i < count; i++) {
     const card = createCard(array[i]);
 
     const icon = L.icon({
@@ -104,16 +104,16 @@ const createIcons = (map, array, count) => {
       },
     );
     marker.addTo(map).bindPopup(card);
-    markerArr.push(marker);
+    markers.push(marker);
   }
-  return markerArr;
+  return markers;
 };
 
 //удаление маркеров
 const deleteMarkers = (markers) => {
-  for(let i = 0; i < markers.length; i++) {
+  for (let i = 0; i < markers.length; i++) {
     markers[i].remove();
   }
 };
 
-export { addDisabled, removeDisabled, adMap, createMainIcon, createIcons, deleteMarkers};
+export { addDisabled, removeDisabled, addMap, createMainIcon, createIcons, deleteMarkers };

@@ -22,7 +22,7 @@ const typeToPrice = {
   palace: 10000,
 };
 
-const roomToCapacity = {
+const roomsCapacity = {
   1: [2],
   2: [1, 2],
   3: [0, 1, 2],
@@ -30,4 +30,4 @@ const roomToCapacity = {
 };
 
 
-export { COUNT_OF_ICONS, LocationTokio, typeToPrice, roomToCapacity, HousingType, URL_GET, URL_POST };
+export { COUNT_OF_ICONS, LocationTokio, typeToPrice, roomsCapacity, HousingType, URL_GET, URL_POST };
