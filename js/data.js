@@ -1,5 +1,8 @@
 const COUNT_OF_ICONS = 10;
 
+const URL_GET = 'https://22.javascript.pages.academy/keksobooking/data';
+const URL_POST = 'https://22.javascript.pages.academy/keksobooking';
+
 const LocationTokio = {
   X: 35.675,
   Y: 139.75,
@@ -26,9 +29,5 @@ const roomToCapacity = {
   100: [3],
 };
 
-const capacityArray = [3, 2, 1, 0];
 
-const urlGet = 'https://22.javascript.pages.academy/keksobooking/data';
-const urlPost = 'https://22.javascript.pages.academy/keksobooking';
-
-export { COUNT_OF_ICONS, LocationTokio, typeToPrice, roomToCapacity, capacityArray, HousingType, urlGet, urlPost };
+export { COUNT_OF_ICONS, LocationTokio, typeToPrice, roomToCapacity, HousingType, URL_GET, URL_POST };

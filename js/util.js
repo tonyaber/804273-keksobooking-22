@@ -1,16 +1,19 @@
 import { LocationTokio } from './data.js';
 import { defaultForm } from './setting-for-form.js';
-import { mainMarker } from './main.js';
+import { mainMarker, map } from './main.js';
 
 const ALERT_SHOW_TIME = 5000;
 
+const main = document.querySelector('main');
+
+const buttonEscape = 'Escape';
 //Функция поиска рандомного числа
 const getRandomNumber = (min, max, numberOfDigits = 0) => {
   if (max >= 0 && min >= 0) {
     return (Math.random() * (max - min) + min).toFixed(numberOfDigits);
   }
   throw new Error('Число меньше нуля');
-}
+};
 
 //Функция создания массива с рандомным набором данных
 const getRandomArray = (array) => {
@@ -21,12 +24,12 @@ const getRandomArray = (array) => {
     const swap = newArray[j];
     newArray[j] = newArray[i];
     newArray[i] = swap;
-  }
-  
+  };
+
   const count = getRandomNumber(1, newArray.length - 1);
 
   return newArray.slice(0, count);
-}
+};
 
 //Функция создания рамдомного элемента в масиве
 const getRandomElementOfArray = (array) => array[getRandomNumber(0, array.length - 1)];
@@ -55,7 +58,7 @@ const dataDownloadError = (message) => {
   setTimeout(() => {
     alertContainer.remove();
   }, ALERT_SHOW_TIME);
-}
+};
 
 //сообщение при успешной отправке данных
 const showAlertSuccess = () => {
@@ -65,16 +68,26 @@ const showAlertSuccess = () => {
 
   message.style.zIndex = 1000;
 
-  document.body.append(message);
+  main.append(message);
 
-  document.addEventListener('click', () => message.remove());
-
-  document.addEventListener('keydown', (evt) => {
-    if (evt.key == 27) {
+  const onDocumentEscKeydownInSuccess = (evt) => {
+    if (evt.key === buttonEscape) {
       message.remove();
+      document.removeEventListener('click', onDocumentClickInSuccess);
+      document.removeEventListener('keydown', onDocumentEscKeydownInSuccess);
     }
-  })
-}
+  };
+
+  const onDocumentClickInSuccess = () => {
+    message.remove();
+    document.removeEventListener('click', onDocumentClickInSuccess);
+    document.removeEventListener('keydown', onDocumentEscKeydownInSuccess);
+  };
+
+  document.addEventListener('click', onDocumentClickInSuccess);
+
+  document.addEventListener('keydown', onDocumentEscKeydownInSuccess);
+};
 
 //сообщение об ошибке при отправке данных
 const showAlertError = () => {
@@ -84,17 +97,34 @@ const showAlertError = () => {
 
   message.style.zIndex = 1000;
 
-  document.body.append(message);
-
-  document.addEventListener('click', () => message.remove());
-
-  document.addEventListener('keydown', (evt) => {
-    if (evt.key == 27) {
+  main.append(message);
+  
+  const onDocumentEscKeydownInError = (evt) => {
+    if (evt.key === buttonEscape) {
       message.remove();
+      document.removeEventListener('click', onDocumentClickInError);
+      document.removeEventListener('keydown', onDocumentEscKeydownInError);
     }
-  })
-}
+  };
 
+  const onDocumentClickInError = () => {
+    message.remove();
+    document.removeEventListener('click', onDocumentClickInError);
+    document.removeEventListener('keydown', onDocumentEscKeydownInError);
+  };
+
+  document.addEventListener('click', onDocumentClickInError);
+
+  document.addEventListener('keydown', onDocumentEscKeydownInError);
+};
+
+//карта по умолчанию
+const defaultMap = () => {
+  map.setView({
+    lat: LocationTokio.X,
+    lng: LocationTokio.Y,
+  }, 10);
+};
 //функция переносит селект на тот элемент, который выбран
 const changeSelected = (parent, index) => {
   const child = parent.querySelectorAll('option');
@@ -102,7 +132,7 @@ const changeSelected = (parent, index) => {
     child[i].removeAttribute('selected', '');
   }
   child[index].setAttribute('selected', '');
-}
+};
 
 //очистить форму
 const resetForm = (form) => {
@@ -118,4 +148,4 @@ const resetForm = (form) => {
   mainMarker.setLatLng([LocationTokio.X, LocationTokio.Y]).update();
 }
 
-export { getRandomNumber, getRandomArray, getRandomElementOfArray, dataDownloadError, showAlertSuccess, showAlertError, resetForm, changeSelected };
+export { getRandomNumber, getRandomArray, getRandomElementOfArray, dataDownloadError, showAlertSuccess, showAlertError, resetForm, defaultMap, changeSelected };
