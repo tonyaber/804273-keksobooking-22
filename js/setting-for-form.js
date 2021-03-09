@@ -1,19 +1,20 @@
 import { changeSelected } from './util.js';
-import { roomToCapacity, typeToPrice, LocationTokio, URL_POST} from './data.js';
+import { roomsCapacity, typeToPrice, LocationTokio, URL_POST } from './data.js';
+import { addPhoto } from './add-photo.js';
 
 //функция блокировки елементов
-const disableOption = (parent) => {
-  const child = parent.querySelectorAll('option');
-  for (let i = 0; i < child.length; i++) {
-    child[i].disabled = true;
-  }
+const disableOption = (capacity) => {
+  const option = capacity.querySelectorAll('option');
+  option.forEach(item => {
+    item.disabled = true;
+  })
 };
 
 //функция разблокировки елементов
-const enableOption = (array, parent) => {
-  const child = parent.querySelectorAll('option');
-  array.forEach(item => {
-    child[item].disabled = false;
+const enableOption = (quantityRoom, capacity) => {
+  const option = capacity.querySelectorAll('option');
+  quantityRoom.forEach(item => {
+    option[item].disabled = false;
   })
 };
 
@@ -47,6 +48,15 @@ const addAddress = (location) => {
   address.value = `${location.X}, ${location.Y}`;
 };
 
+//настройки добавления фото
+const fileChooserAvatar = document.querySelector('#avatar');
+const previewAvatar = document.querySelector('.ad-form-header__preview');
+const avatar = addPhoto(fileChooserAvatar, previewAvatar);
+
+const fileChooserAd = document.querySelector('#images');
+const previewaAd = document.querySelector('.ad-form__photo');
+addPhoto(fileChooserAd, previewaAd);
+
 //поля формы по умолчанию
 const defaultForm = () => {
   addAddress(LocationTokio);
@@ -60,7 +70,14 @@ const defaultForm = () => {
   //по умолчанию для 1 гостя одна комата
   changeSelected(capacity, 2);
   disableOption(capacity);
-  enableOption(roomToCapacity[1], capacity);
+  enableOption(roomsCapacity[1], capacity);
+
+  //фотография пользователя и рекламные фото
+  avatar.src = 'img/muffin-grey.svg';
+  const adImage = previewaAd.querySelector('img');
+  if (previewaAd.contains(adImage)) {
+    previewaAd.removeChild(adImage);
+  }
 };
 
 //настройка формы
@@ -120,8 +137,8 @@ const settingForForm = () => {
     const value = evt.target.value;
     changeSelected(evt.target, index);
     disableOption(capacity);
-    enableOption(roomToCapacity[value], capacity);
-    changeSelected(capacity, roomToCapacity[value][0]);
+    enableOption(roomsCapacity[value], capacity);
+    changeSelected(capacity, roomsCapacity[value][0]);
   });
 
   //слушатель событий для поля количества комнат,
@@ -130,6 +147,7 @@ const settingForForm = () => {
     const index = evt.target.options.selectedIndex;
     changeSelected(evt.target, index);
   });
+
 };
 
 export { settingForForm, defaultForm, addAddress, form, submitButton };

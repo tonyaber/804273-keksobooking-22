@@ -1,6 +1,6 @@
 /* global _:readonly */
 import { COUNT_OF_ICONS } from './data.js';
-import { deleteMarkers, createIcons } from './ad-map.js';
+import { deleteMarkers, createIcons } from './add-map.js';
 import { map } from './main.js';
 
 const filterForPrice = {
