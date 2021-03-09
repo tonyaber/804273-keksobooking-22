@@ -1,7 +1,10 @@
 /* global _:readonly */
-import { COUNT_OF_ICONS } from './data.js';
+import { COUNT_OF_ICONS } from './const.js';
 import { deleteMarkers, createIcons } from './add-map.js';
 import { map } from './main.js';
+import { changeSelected } from './util.js';
+
+const DELAY_ADDING_MARKERS = 500;
 
 const filterForPrice = {
   low: [0, 10000],
@@ -10,11 +13,9 @@ const filterForPrice = {
   any: [0, 10000000],
 };
 
-const DELAY_ADDING_MARKERS = 500;
-
 const mapFilter = document.querySelector('.map__filters');
-const housingType = mapFilter.querySelector('#housing-type');
-const housingPrice = mapFilter.querySelector('#housing-price');
+const housingTypes = mapFilter.querySelector('#housing-type');
+const housingPrices = mapFilter.querySelector('#housing-price');
 const housingRooms = mapFilter.querySelector('#housing-rooms');
 const housingGuests = mapFilter.querySelector('#housing-guests');
 const housingFeatures = mapFilter.querySelector('#housing-features');
@@ -47,20 +48,29 @@ const featureFilter = (advert, filters) => {
   return true;
 };
 
-const filterAds = (markers, offers) => {
-  let type = 'any';
-  let price = 'any';
-  let rooms = 'any';
-  let guest = 'any';
-  let featuresList = [];
-  let filteredAd = offers;
+const updateMarkers = (filteredAd, markers) => {
+  deleteMarkers(markers);
+  const newCountOficons = filteredAd.length < COUNT_OF_ICONS ?
+    filteredAd.length : COUNT_OF_ICONS;
+  return markers = createIcons(map, filteredAd, newCountOficons);
+};
 
-  const unpdateMarkers = () => {
-    deleteMarkers(markers);
-    const newCountOficons = filteredAd.length < COUNT_OF_ICONS ?
-      filteredAd.length : COUNT_OF_ICONS;
-    markers = createIcons(map, filteredAd, newCountOficons);
-  };
+let type = 'any';
+let price = 'any';
+let rooms = 'any';
+let guest = 'any';
+let featuresList = [];
+
+let offersList = [];
+let markersList =[];
+let markersWithFilters = [];
+let filteredAd = [];
+
+const filterAds = (markers, offers) => {
+  filteredAd = offers;
+  offersList = offers;
+  markersList = markers;
+  markersWithFilters = markers;
 
   const filteringOffers = () => filteredAd = offers
     .filter((offer) => typeFilter(offer, type))
@@ -69,28 +79,48 @@ const filterAds = (markers, offers) => {
     .filter((offer) => guestFilter(offer, guest))
     .filter((offer) => featureFilter(offer, featuresList));
 
-  housingType.addEventListener('change', _.debounce((evt) => {
+  housingTypes.addEventListener('change', _.debounce((evt) => {
     type = evt.target.value;
+
+    const index = evt.target.options.selectedIndex;
+    changeSelected(housingTypes, index);
+
     filteringOffers();
-    unpdateMarkers();
+
+    markersWithFilters = updateMarkers(filteredAd, markersWithFilters);
   }, DELAY_ADDING_MARKERS));
 
-  housingPrice.addEventListener('change', _.debounce((evt) => {
+  housingPrices.addEventListener('change', _.debounce((evt) => {
     price = evt.target.value;
+
+    const index = evt.target.options.selectedIndex;
+    changeSelected(housingPrices, index);
+
     filteringOffers();
-    unpdateMarkers();
+
+    markersWithFilters = updateMarkers(filteredAd, markersWithFilters);
   }, DELAY_ADDING_MARKERS));
 
   housingRooms.addEventListener('change', _.debounce((evt) => {
     rooms = evt.target.value;
+
+    const index = evt.target.options.selectedIndex;
+    changeSelected(housingRooms, index);
+
     filteringOffers();
-    unpdateMarkers();
+
+    markersWithFilters = updateMarkers(filteredAd, markersWithFilters);
   }, DELAY_ADDING_MARKERS));
 
   housingGuests.addEventListener('change', _.debounce((evt) => {
     guest = evt.target.value;
+
+    const index = evt.target.options.selectedIndex;
+    changeSelected(housingGuests, index);
+
     filteringOffers();
-    unpdateMarkers();
+
+    markersWithFilters = updateMarkers(filteredAd, markersWithFilters);
   }, DELAY_ADDING_MARKERS));
 
   housingFeatures.addEventListener('change', _.debounce(() => {
@@ -99,8 +129,29 @@ const filterAds = (markers, offers) => {
       .map((advert) => advert.value);
 
     filteringOffers();
-    unpdateMarkers();
+
+    markersWithFilters = updateMarkers(filteredAd, markersWithFilters);
   }, DELAY_ADDING_MARKERS));
 }
 
-export { filterAds, mapFilter };
+//сброс фильтров при очистке формы
+const resetFilters = () => {
+  changeSelected(housingTypes, 0);
+  changeSelected(housingPrices, 0);
+  changeSelected(housingRooms, 0);
+  changeSelected(housingGuests, 0);
+
+  deleteMarkers(markersWithFilters);
+  markersWithFilters = updateMarkers(offersList, markersList);
+
+  filteredAd = offersList;
+  type = 'any';
+  price = 'any';
+  rooms = 'any';
+  guest = 'any';
+  featuresList = [];
+
+  mapFilter.reset();
+}
+
+export { filterAds, mapFilter, resetFilters };

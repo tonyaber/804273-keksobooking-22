@@ -1,6 +1,6 @@
 import { form } from './setting-for-form.js';
 import { dataDownloadError, showAlertSuccess, showAlertError, resetForm, defaultMap } from './util.js';
-import { URL_GET, URL_POST } from './data.js';
+import { URL_GET, URL_POST } from './const.js';
 
 const dataGet = (onSuccess) => {
   fetch(URL_GET)
@@ -37,13 +37,5 @@ const dataPost = (evt) => {
 
 //отправка формы
 form.addEventListener('submit', dataPost);
-
-//очистка формы
-const resetButton = form.querySelector('.ad-form__reset');
-resetButton.addEventListener('click', (evt) => {
-  evt.preventDefault();
-  resetForm(form);
-  defaultMap();
-});
 
 export { dataGet };

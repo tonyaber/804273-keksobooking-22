@@ -1,15 +1,16 @@
-import { HousingType } from './data.js';
+import { HousingType } from './const.js';
 
 const featuresArray = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
 
 //Добавить несколько фото в обьявление
 const addPhoto = (templatePhoto, adPhoto, templatePhotoParent) => {
   templatePhotoParent.innerHTML = '';
-  for (let i = 0; i < adPhoto.length; i++) {
+  adPhoto.forEach(photo => {
     const newPhoto = templatePhoto.cloneNode(true);
-    newPhoto.src = adPhoto[i];
+    newPhoto.src = photo;
     templatePhotoParent.appendChild(newPhoto);
-  }
+  })
+
 };
 
 //Добавить удобства
@@ -25,7 +26,7 @@ const addFeature = (templateFeature, adFeature, templateFeatureParent) => {
 };
 
 //добавить дата-атрибуты списку удобств
-const getDataAtributes = (feature) => {
+const setDataAtributes = (feature) => {
   let i = 0;
   feature.forEach(featureElement => {
     featureElement.setAttribute('data-name', featuresArray[i]);
@@ -38,8 +39,7 @@ const templatePopup = template.querySelector('.popup');
 const featuresTemplate = templatePopup.querySelector('.popup__features');
 const featureTemplate = featuresTemplate.querySelectorAll('.popup__feature');
 
-getDataAtributes(featureTemplate);
-
+setDataAtributes(featureTemplate);
 
 const createCard = (array) => {
   const card = templatePopup.cloneNode(true);

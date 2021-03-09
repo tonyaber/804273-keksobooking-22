@@ -1,12 +1,14 @@
-import { LocationTokio } from './data.js';
+import { LocationTokio } from './const.js';
 import { defaultForm } from './setting-for-form.js';
 import { mainMarker, map } from './main.js';
+import { resetFilters } from './filter-ads.js';
 
 const ALERT_SHOW_TIME = 5000;
 
 const main = document.querySelector('main');
 
 const BUTTON_ESCAPE = 'Escape';
+
 //Функция поиска рандомного числа
 const getRandomNumber = (min, max, numberOfDigits = 0) => {
   if (max >= 0 && min >= 0) {
@@ -70,16 +72,16 @@ const showAlertSuccess = () => {
 
   main.append(message);
 
-  const onDocumentEscKeydownInSuccess = (evt) => {
-    if (evt.key === BUTTON_ESCAPE) {
-      onDocumentClickInSuccess();
-    }
-  };
-
   const onDocumentClickInSuccess = () => {
     message.remove();
     document.removeEventListener('click', onDocumentClickInSuccess);
     document.removeEventListener('keydown', onDocumentEscKeydownInSuccess);
+  };
+
+  const onDocumentEscKeydownInSuccess = (evt) => {
+    if (evt.key === BUTTON_ESCAPE) {
+      onDocumentClickInSuccess();
+    }
   };
 
   document.addEventListener('click', onDocumentClickInSuccess);
@@ -97,16 +99,16 @@ const showAlertError = () => {
 
   main.append(message);
 
-  const onDocumentEscKeydownInError = (evt) => {
-    if (evt.key === BUTTON_ESCAPE) {
-      onDocumentClickInError();
-    }
-  };
-
   const onDocumentClickInError = () => {
     message.remove();
     document.removeEventListener('click', onDocumentClickInError);
     document.removeEventListener('keydown', onDocumentEscKeydownInError);
+  };
+
+  const onDocumentEscKeydownInError = (evt) => {
+    if (evt.key === BUTTON_ESCAPE) {
+      onDocumentClickInError();
+    }
   };
 
   document.addEventListener('click', onDocumentClickInError);
@@ -121,6 +123,7 @@ const defaultMap = () => {
     lng: LocationTokio.Y,
   }, 10);
 };
+
 //функция переносит селект на тот элемент, который выбран
 const changeSelected = (select, index) => {
   const option = select.querySelectorAll('option');
@@ -140,7 +143,7 @@ const resetForm = (form) => {
   }
 
   defaultForm();
-
+  resetFilters();
   mainMarker.setLatLng([LocationTokio.X, LocationTokio.Y]).update();
 }
 
