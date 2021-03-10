@@ -13,6 +13,14 @@ module.exports = {
         test: /\.css$/i,
         use: ["style-loader", "css-loader"],
       },
+      {
+        test: /\.(png|jpg|git)$/i,
+        use: [
+          {
+            loader: 'url-loader',
+          },
+        ],
+      },
     ],
   }
 };
