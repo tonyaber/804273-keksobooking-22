@@ -5,7 +5,7 @@
 *.pdf
 *.psd
 *.sublime*
-
+bulid/js/main.bundle.*
 node_modules/
 npm-debug.log*
 Thumbs.db
