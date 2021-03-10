@@ -1,4 +1,4 @@
-/* global L: readonly */
+import L from 'leaflet';
 import { createCard } from './create-card.js';
 import { LocationTokio } from './const.js';
 import { form } from './setting-for-form.js';
