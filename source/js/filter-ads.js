@@ -1,4 +1,4 @@
-/* global _:readonly */
+import _ from 'lodash';
 import { COUNT_OF_ICONS } from './const.js';
 import { deleteMarkers, createIcons } from './add-map.js';
 import { map } from './main.js';
