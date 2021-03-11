@@ -3,6 +3,7 @@ import { HousingType } from './const.js';
 //Добавить несколько фото в обьявление
 const addPhoto = (templatePhoto, adPhoto, templatePhotoParent) => {
   templatePhotoParent.innerHTML = '';
+
   adPhoto.forEach(photo => {
     const newPhoto = templatePhoto.cloneNode(true);
     newPhoto.src = photo;
@@ -14,14 +15,12 @@ const addPhoto = (templatePhoto, adPhoto, templatePhotoParent) => {
 //Добавить удобства
 const addFeature = (adFeature, templateFeatureParent) => {
   templateFeatureParent.innerHTML = '';
+
+  const featureClass = 'popup__feature';
+
   adFeature.forEach(feature => {
     const newFeature = document.createElement('li');
-
-    const newClass = 'popup__feature--' + feature;
-
-    newFeature.classList.add('popup__feature');
-    newFeature.classList.add(newClass);
-
+    newFeature.classList.add(featureClass, featureClass + '--' + feature);
     templateFeatureParent.appendChild(newFeature);
   });
 };

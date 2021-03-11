@@ -38,10 +38,10 @@ const priceFilter = (advert, filter) => {
   const offerMinPrice = filterForPrice[filter][0];
   const offerMaxPrice = filterForPrice[filter][1];
 
-  if (advert.offer.price >= offerMinPrice && advert.offer.price < offerMaxPrice) {
+  if (filter === ANY_VALUE) {
     return true;
   }
-  else if (filter === ANY_VALUE) {
+  if (advert.offer.price >= offerMinPrice && advert.offer.price < offerMaxPrice) {
     return true;
   }
   return false;
