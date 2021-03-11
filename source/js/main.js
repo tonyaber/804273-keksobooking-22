@@ -1,7 +1,7 @@
 import { addDisabled, addMap, createMainIcon, createIcons, removeDisabled } from './add-map.js';
 import { settingForForm, form } from './setting-for-form.js';
 import { dataGet } from './fetch.js';
-import { COUNT_OF_ICONS } from './data.js';
+import { COUNT_OF_ICONS } from './const.js';
 import { filterAds, mapFilter } from './filter-ads.js';
 
 //блокировка елементов формы для обьявлений и фильтров для карты

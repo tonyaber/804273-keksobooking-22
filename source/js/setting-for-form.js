@@ -1,6 +1,7 @@
 import { changeSelected } from './util.js';
-import { roomsCapacity, typeToPrice, LocationTokio, URL_POST } from './data.js';
+import { roomsCapacity, typeToPrice, LocationTokio, URL_POST } from './const.js';
 import { addPhoto } from './add-photo.js';
+import { resetForm, defaultMap } from './util.js';
 
 //функция блокировки елементов
 const disableOption = (capacity) => {
@@ -78,32 +79,12 @@ const defaultForm = () => {
   if (previewaAd.contains(adImage)) {
     previewaAd.removeChild(adImage);
   }
+
 };
 
 //настройка формы
 const settingForForm = () => {
   defaultForm();
-
-  //изменение минимума при выборе типа жилья
-  typeInput.addEventListener('input', (evt) => {
-    const index = evt.target.options.selectedIndex;
-    const value = evt.target.value;
-    changeSelected(evt.target, index);
-    priceInput.min = typeToPrice[value];
-    priceInput.placeholder = typeToPrice[value];
-  });
-
-  //слушатель событий для времени,
-  //ставит селект в выбраное поле,
-  //устанавливает зависимость времени въезда/выезда
-  timeInput.addEventListener('change', (evt) => {
-    const index = evt.target.options.selectedIndex;
-    const value = evt.target.value;
-    changeSelected(timeIn, index);
-    changeSelected(timeOut, index);
-    timeOut.value = value;
-    timeIn.value = value;
-  });
 
   //атрибуты формы
   form.setAttribute('method', formConfig.METHOD);
@@ -128,6 +109,26 @@ const settingForForm = () => {
   images.setAttribute('required', '');
   images.setAttribute('accept', formConfig.ACCEPT);
 
+  //изменение минимума при выборе типа жилья
+  typeInput.addEventListener('input', (evt) => {
+    const index = evt.target.options.selectedIndex;
+    const value = evt.target.value;
+    changeSelected(evt.target, index);
+    priceInput.min = typeToPrice[value];
+    priceInput.placeholder = typeToPrice[value];
+  });
+
+  //слушатель событий для времени,
+  //ставит селект в выбраное поле,
+  //устанавливает зависимость времени въезда/выезда
+  timeInput.addEventListener('change', (evt) => {
+    const index = evt.target.options.selectedIndex;
+    const value = evt.target.value;
+    changeSelected(timeIn, index);
+    changeSelected(timeOut, index);
+    timeOut.value = value;
+    timeIn.value = value;
+  });
 
   //слушатель событий для количества гостей,
   //устанавливает селект на нужное поле,
@@ -150,4 +151,12 @@ const settingForForm = () => {
 
 };
 
-export { settingForForm, defaultForm, addAddress, form, submitButton };
+//очистка формы
+const resetButton = form.querySelector('.ad-form__reset');
+resetButton.addEventListener('click', (evt) => {
+  evt.preventDefault();
+  resetForm(form);
+  defaultMap();
+});
+
+export { settingForForm, defaultForm, form, submitButton };

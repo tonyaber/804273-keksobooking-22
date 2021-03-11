@@ -1,6 +1,7 @@
-/* global L: readonly */
+import L from 'leaflet';
+import 'leaflet/dist/leaflet.css';
 import { createCard } from './create-card.js';
-import { LocationTokio } from './data.js';
+import { LocationTokio } from './const.js';
 import { form } from './setting-for-form.js';
 
 const TILE_LAYER_URL = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
@@ -111,9 +112,7 @@ const createIcons = (map, array, count) => {
 
 //удаление маркеров
 const deleteMarkers = (markers) => {
-  for (let i = 0; i < markers.length; i++) {
-    markers[i].remove();
-  }
+  markers.forEach(marker => marker.remove());
 };
 
 export { addDisabled, removeDisabled, addMap, createMainIcon, createIcons, deleteMarkers };
