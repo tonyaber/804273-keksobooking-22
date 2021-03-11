@@ -16,11 +16,14 @@ const addPhoto = (templatePhoto, adPhoto, templatePhotoParent) => {
 const addFeature = (adFeature, templateFeatureParent) => {
   templateFeatureParent.innerHTML = '';
 
-  const featureClass = 'popup__feature';
+  const popupClass = 'popup__feature';
 
   adFeature.forEach(feature => {
     const newFeature = document.createElement('li');
-    newFeature.classList.add(featureClass, featureClass + '--' + feature);
+
+    const featureClass = popupClass + '--' + feature;
+    newFeature.classList.add(popupClass, featureClass);
+    
     templateFeatureParent.appendChild(newFeature);
   });
 };
