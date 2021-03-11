@@ -1,7 +1,5 @@
 import { HousingType } from './const.js';
 
-const featuresArray = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
-
 //Добавить несколько фото в обьявление
 const addPhoto = (templatePhoto, adPhoto, templatePhotoParent) => {
   templatePhotoParent.innerHTML = '';
@@ -14,32 +12,22 @@ const addPhoto = (templatePhoto, adPhoto, templatePhotoParent) => {
 };
 
 //Добавить удобства
-const addFeature = (templateFeature, adFeature, templateFeatureParent) => {
+const addFeature = (adFeature, templateFeatureParent) => {
   templateFeatureParent.innerHTML = '';
   adFeature.forEach(feature => {
-    templateFeature.forEach(value => {
-      if (value.dataset.name === feature) {
-        templateFeatureParent.appendChild(value);
-      }
-    });
-  });
-};
+    const newFeature = document.createElement('li');
 
-//добавить дата-атрибуты списку удобств
-const setDataAtributes = (feature) => {
-  let i = 0;
-  feature.forEach(featureElement => {
-    featureElement.setAttribute('data-name', featuresArray[i]);
-    i++;
+    const newClass = 'popup__feature--' + feature;
+
+    newFeature.classList.add('popup__feature');
+    newFeature.classList.add(newClass);
+
+    templateFeatureParent.appendChild(newFeature);
   });
 };
 
 const template = document.querySelector('#card').content;
 const templatePopup = template.querySelector('.popup');
-const featuresTemplate = templatePopup.querySelector('.popup__features');
-const featureTemplate = featuresTemplate.querySelectorAll('.popup__feature');
-
-setDataAtributes(featureTemplate);
 
 const createCard = (array) => {
   const card = templatePopup.cloneNode(true);
@@ -67,8 +55,7 @@ const createCard = (array) => {
   }
 
   const features = card.querySelector('.popup__features');
-  const feature = features.querySelectorAll('.popup__feature');
-  addFeature(feature, array.offer.features, features);
+  addFeature(array.offer.features, features);
 
   const photos = card.querySelector('.popup__photos');
   const photo = photos.querySelector('.popup__photo');

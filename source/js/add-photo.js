@@ -18,19 +18,17 @@ const addPhoto = (fileChooser, preview) => {
       preview.appendChild(img);
     }
 
-    const file = fileChooser.files[0];
+    let file = fileChooser.files[0];
     const fileName = file.name.toLowerCase();
 
-    const matches = FILE_TYPES.some((it) => {
-      return fileName.endsWith(it);
-    });
+    const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
+    
+    (!matches) ? fileChooser.setCustomValidity('Недопустимый формат') : fileChooser.setCustomValidity('');
 
     if (matches) {
       const reader = new FileReader();
 
-      reader.addEventListener('load', () => {
-        img.src = reader.result;
-      });
+      reader.addEventListener('load', () => img.src = reader.result);
 
       reader.readAsDataURL(file);
     }

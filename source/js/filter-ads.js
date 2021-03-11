@@ -6,6 +6,8 @@ import { changeSelected } from './util.js';
 
 const DELAY_ADDING_MARKERS = 500;
 
+const ANY_VALUE = 'any';
+
 const filterForPrice = {
   low: [0, 10000],
   middle: [10000, 50000],
@@ -20,7 +22,17 @@ const housingRooms = mapFilter.querySelector('#housing-rooms');
 const housingGuests = mapFilter.querySelector('#housing-guests');
 const housingFeatures = mapFilter.querySelector('#housing-features');
 
-const typeFilter = (advert, filter) => (filter === 'any' || advert.offer.type === filter) ?  true : false;
+let type;
+let price;
+let rooms;
+let guest;
+let featuresList;
+let offersList = [];
+let markersList = [];
+let markersWithFilters = [];
+let filteredAd = [];
+
+const typeFilter = (advert, filter) => (filter === ANY_VALUE || advert.offer.type === filter) ?  true : false;
 
 const priceFilter = (advert, filter) => {
   const offerMinPrice = filterForPrice[filter][0];
@@ -29,15 +41,15 @@ const priceFilter = (advert, filter) => {
   if (advert.offer.price >= offerMinPrice && advert.offer.price < offerMaxPrice) {
     return true;
   }
-  else if (filter === 'any') {
+  else if (filter === ANY_VALUE) {
     return true;
   }
   return false;
 };
 
-const roomFilter = (advert, filter) => (filter === 'any' || filter === String(advert.offer.rooms)) ? true : false;
+const roomFilter = (advert, filter) => (filter === ANY_VALUE || filter === String(advert.offer.rooms)) ? true : false;
 
-const guestFilter = (advert, filter) => (filter === 'any' || filter === String(advert.offer.guests)) ? true : false;
+const guestFilter = (advert, filter) => (filter === ANY_VALUE || filter === String(advert.offer.guests)) ? true : false;
 
 const featureFilter = (advert, filters) => {
   for (const filter of filters) {
@@ -55,18 +67,17 @@ const updateMarkers = (filteredAd, markers) => {
   return markers = createIcons(map, filteredAd, newCountOficons);
 };
 
-let type = 'any';
-let price = 'any';
-let rooms = 'any';
-let guest = 'any';
-let featuresList = [];
-
-let offersList = [];
-let markersList =[];
-let markersWithFilters = [];
-let filteredAd = [];
+const defaultFilters = () => {
+  type = ANY_VALUE;
+  price = ANY_VALUE;
+  rooms = ANY_VALUE;
+  guest = ANY_VALUE;
+  featuresList = [];
+}
 
 const filterAds = (markers, offers) => {
+  defaultFilters();
+
   filteredAd = offers;
   offersList = offers;
   markersList = markers;
@@ -145,11 +156,7 @@ const resetFilters = () => {
   markersWithFilters = updateMarkers(offersList, markersList);
 
   filteredAd = offersList;
-  type = 'any';
-  price = 'any';
-  rooms = 'any';
-  guest = 'any';
-  featuresList = [];
+  defaultFilters();
 
   mapFilter.reset();
 }

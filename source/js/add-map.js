@@ -111,9 +111,7 @@ const createIcons = (map, array, count) => {
 
 //удаление маркеров
 const deleteMarkers = (markers) => {
-  markers.forEach(marker => {
-    marker.remove();
-  });
+  markers.forEach(marker => marker.remove());
 };
 
 export { addDisabled, removeDisabled, addMap, createMainIcon, createIcons, deleteMarkers };
