@@ -2,7 +2,7 @@ import { form } from './setting-for-form.js';
 import { dataDownloadError, showAlertSuccess, showAlertError, resetForm, defaultMap } from './util.js';
 import { URL_GET, URL_POST } from './const.js';
 
-const dataGet = (onSuccess) => {
+const getData = (onSuccess) => {
   fetch(URL_GET)
     .then((response) => response.json())
     .then((offers) => onSuccess(offers))
@@ -16,7 +16,7 @@ const checkStatus = (response) => {
   throw new Error();
 };
 
-const dataPost = (evt) => {
+const sendData = (evt) => {
   evt.preventDefault();
   const formData = new FormData(evt.target);
   fetch(
@@ -36,6 +36,6 @@ const dataPost = (evt) => {
 };
 
 //отправка формы
-form.addEventListener('submit', dataPost);
+form.addEventListener('submit', sendData);
 
-export { dataGet };
+export { getData };

@@ -22,13 +22,15 @@ const addPhoto = (fileChooser, preview) => {
     const fileName = file.name.toLowerCase();
 
     const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
-    
+
     (!matches) ? fileChooser.setCustomValidity('Недопустимый формат') : fileChooser.setCustomValidity('');
 
     if (matches) {
       const reader = new FileReader();
 
-      reader.addEventListener('load', () => img.src = reader.result);
+      reader.addEventListener('load', () => {
+        img.src = reader.result
+      });
 
       reader.readAsDataURL(file);
     }

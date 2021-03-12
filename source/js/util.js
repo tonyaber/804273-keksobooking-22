@@ -5,9 +5,9 @@ import { resetFilters } from './filter-ads.js';
 
 const ALERT_SHOW_TIME = 5000;
 
-const main = document.querySelector('main');
-
 const BUTTON_ESCAPE = 'Escape';
+
+const main = document.querySelector('main');
 
 //сообщения при ошибке загрузки данных
 const dataDownloadError = (message) => {

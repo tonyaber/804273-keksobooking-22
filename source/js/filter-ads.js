@@ -24,7 +24,7 @@ const housingFeatures = mapFilter.querySelector('#housing-features');
 
 let type;
 let price;
-let rooms;
+let room;
 let guest;
 let featuresList;
 let offersList = [];
@@ -32,7 +32,7 @@ let markersList = [];
 let markersWithFilters = [];
 let filteredAd = [];
 
-const typeFilter = (advert, filter) => (filter === ANY_VALUE || advert.offer.type === filter) ?  true : false;
+const typeFilter = (advert, filter) => (filter === ANY_VALUE || advert.offer.type === filter) ? true : false;
 
 const priceFilter = (advert, filter) => {
   const offerMinPrice = filterForPrice[filter][0];
@@ -70,7 +70,7 @@ const updateMarkers = (filteredAd, markers) => {
 const defaultFilters = () => {
   type = ANY_VALUE;
   price = ANY_VALUE;
-  rooms = ANY_VALUE;
+  room = ANY_VALUE;
   guest = ANY_VALUE;
   featuresList = [];
 }
@@ -86,52 +86,37 @@ const filterAds = (markers, offers) => {
   const filteringOffers = () => filteredAd = offers
     .filter((offer) => typeFilter(offer, type))
     .filter((offer) => priceFilter(offer, price))
-    .filter((offer) => roomFilter(offer, rooms))
+    .filter((offer) => roomFilter(offer, room))
     .filter((offer) => guestFilter(offer, guest))
     .filter((offer) => featureFilter(offer, featuresList));
 
-  housingTypes.addEventListener('change', _.debounce((evt) => {
-    type = evt.target.value;
-
+  const filteringEventListener= (filtersForHousing,evt )=> {
     const index = evt.target.options.selectedIndex;
-    changeSelected(housingTypes, index);
+    changeSelected(filtersForHousing, index);
 
     filteringOffers();
 
     markersWithFilters = updateMarkers(filteredAd, markersWithFilters);
+  };
+
+  housingTypes.addEventListener('change', _.debounce((evt) => {
+    type = evt.target.value;
+    filteringEventListener(housingTypes, evt)
   }, DELAY_ADDING_MARKERS));
 
   housingPrices.addEventListener('change', _.debounce((evt) => {
     price = evt.target.value;
-
-    const index = evt.target.options.selectedIndex;
-    changeSelected(housingPrices, index);
-
-    filteringOffers();
-
-    markersWithFilters = updateMarkers(filteredAd, markersWithFilters);
+    filteringEventListener(housingPrices, evt)
   }, DELAY_ADDING_MARKERS));
 
   housingRooms.addEventListener('change', _.debounce((evt) => {
-    rooms = evt.target.value;
-
-    const index = evt.target.options.selectedIndex;
-    changeSelected(housingRooms, index);
-
-    filteringOffers();
-
-    markersWithFilters = updateMarkers(filteredAd, markersWithFilters);
+    room = evt.target.value;
+    filteringEventListener(housingRooms, evt)
   }, DELAY_ADDING_MARKERS));
 
   housingGuests.addEventListener('change', _.debounce((evt) => {
     guest = evt.target.value;
-
-    const index = evt.target.options.selectedIndex;
-    changeSelected(housingGuests, index);
-
-    filteringOffers();
-
-    markersWithFilters = updateMarkers(filteredAd, markersWithFilters);
+    filteringEventListener(housingGuests, evt)
   }, DELAY_ADDING_MARKERS));
 
   housingFeatures.addEventListener('change', _.debounce(() => {

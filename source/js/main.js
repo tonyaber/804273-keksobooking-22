@@ -1,6 +1,6 @@
 import { addDisabled, addMap, createMainIcon, createIcons, removeDisabled } from './add-map.js';
 import { settingForForm, form } from './setting-for-form.js';
-import { dataGet } from './fetch.js';
+import { getData } from './fetch.js';
 import { COUNT_OF_ICONS } from './const.js';
 import { filterAds, mapFilter } from './filter-ads.js';
 
@@ -16,7 +16,7 @@ const map = addMap();
 const mainMarker = createMainIcon(map);
 
 //получение данных с сервера
-dataGet((offers) => {
+getData((offers) => {
   const markers = createIcons(map, offers, COUNT_OF_ICONS);
   removeDisabled(mapFilter);
   filterAds(markers, offers);
