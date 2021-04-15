@@ -1,6 +1,6 @@
 import { changeSelected } from './util.js';
 import { roomsCapacity, typeToPrice, LocationTokio, URL_POST } from './const.js';
-import { addPhoto } from './add-photo.js';
+import { addPhotoAvatar, addPhotoAd } from './add-photo.js';
 import { resetForm, defaultMap } from './util.js';
 
 //функция блокировки елементов
@@ -52,11 +52,12 @@ const addAddress = (location) => {
 //настройки добавления фото
 const fileChooserAvatar = document.querySelector('#avatar');
 const previewAvatar = document.querySelector('.ad-form-header__preview');
-const avatar = addPhoto(fileChooserAvatar, previewAvatar);
+const avatar = addPhotoAvatar(fileChooserAvatar, previewAvatar);
 
 const fileChooserAd = document.querySelector('#images');
 const previewaAd = document.querySelector('.ad-form__photo');
-addPhoto(fileChooserAd, previewaAd);
+fileChooserAd.setAttribute('multiple', '');
+addPhotoAd(fileChooserAd, previewaAd);
 
 //поля формы по умолчанию
 const defaultForm = () => {
@@ -75,11 +76,8 @@ const defaultForm = () => {
 
   //фотография пользователя и рекламные фото
   avatar.src = 'img/muffin-grey.svg';
-  const adImage = previewaAd.querySelector('img');
-  if (previewaAd.contains(adImage)) {
-    previewaAd.removeChild(adImage);
-  }
-
+  const adImage = previewaAd.querySelectorAll('img');
+  adImage.forEach(image => previewaAd.removeChild(image));
 };
 
 //настройка формы
